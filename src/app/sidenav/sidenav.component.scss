@@ -1,0 +1,313 @@
+@use "../../variable.scss" as *;
+.sideDiv {
+  background-image: url("/background.png");
+  background-repeat: no-repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 280px;
+  padding: 0 12px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: auto;
+  z-index: 1;
+  @media (max-width: 767px) {
+    width: 79px;
+    height: 100vh;
+    overflow-y: scroll;
+  }
+
+  .image {
+    width: 240px;
+    height: 121px;
+    border-bottom: 1px solid rgba(202, 202, 202, 0.3019607843);
+    padding: 47px 16px 32px;
+    transition: all 0.3s ease;
+  }
+  .desktop-img {
+    display: block;
+  }
+
+  .mobile-img {
+    display: none;
+  }
+  @media (max-width: 767px) {
+    .desktop-img {
+      display: none;
+    }
+
+    .mobile-img {
+      display: block;
+    }
+    .image {
+      width: 70px;
+      height: 70px;
+      padding: 5px;
+    }
+  }
+
+  .navbar {
+    padding: 15px 0px;
+    display: flex;
+    gap: 13px;
+    .nav {
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      width: 100%;
+      height: 45px;
+      font-family: "poppins-regular", "sans-serif";
+      padding: 6px 0px 0px 10px;
+      border-radius: 8px;
+      gap: 11px;
+      font-weight: 600;
+      color: #e8e9e9;
+      transition: all 0.3s ease-in-out;
+      text-decoration: none;
+      @include mobile() {
+        width: 84%;
+      }
+      @include tablet() {
+        width: 84%;
+      }
+      &:hover {
+        background-color: #fff;
+        color: #004cdf;
+        border-radius: 7px;
+      }
+      &:hover .icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(95%)
+          saturate(746%) hue-rotate(194deg) brightness(90%) contrast(100%);
+      }
+
+      .icon {
+        width: 25px;
+        font-size: 20px;
+        color: #fff;
+        transition: filter 0.3s ease, color 0.3s ease;
+      }
+    }
+    span {
+      font-family: "poppins-regular", "sans-serif";
+      font-size: 17px;
+      transition: color 0.3s ease;
+      white-space: nowrap;
+
+      @media (max-width: 767px) {
+        display: none;
+      }
+    }
+
+    .active {
+      background-color: #fff;
+      color: #004cdf;
+      border-radius: 7px;
+      .icon {
+        filter: brightness(0) saturate(100%) invert(27%) sepia(95%)
+          saturate(746%) hue-rotate(194deg) brightness(90%) contrast(100%);
+      }
+    }
+  }
+}
+.profileImg {
+  border: 2px solid #fff;
+  border-radius: 7px;
+  .logoutIcon {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+    float: right;
+    cursor: pointer;
+    color: #fff;
+    position: relative;
+    top: 10px;
+    right: 10px;
+    font-size: 30px;
+  }
+  .pro-detail {
+    margin: 15px;
+    color: #fff;
+
+    .img-fluid {
+      height: 57px;
+      width: 57px;
+      border-radius: 50%;
+    }
+    p {
+      font-family: "poppins-regular", "sans-serif";
+      font-size: 18px;
+      margin-top: 10px;
+      font-weight: 500;
+    }
+    span {
+      font-size: 13px;
+      font-weight: 300;
+      color: #fafafa;
+    }
+  }
+}
+
+.topNav {
+  margin-left: 280px;
+  width: calc(100% - 280px);
+  position: absolute;
+  top: 25px;
+  right: 10px;
+  display: flex;
+  justify-content: end;
+  z-index: 1000;
+
+  @media (max-width: 767px) {
+    .navbaar {
+      display: block;
+      z-index: 999;
+    }
+  }
+  @media (min-width: 767px) {
+    .navbaar {
+      display: none;
+    }
+  }
+  @media (max-width: 767px) {
+    .mobile-nav {
+      background: #004cdf;
+      display: flex;
+      flex-direction: column;
+      color: #fff;
+    }
+  }
+
+  .material-symbols-outlined {
+    font-size: 32px;
+    color: #0c0c0c;
+  }
+  .toggle-icon {
+    width: 40px;
+    text-align: center;
+    font-size: 24px;
+    float: right;
+    cursor: pointer;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    user-select: none;
+    color: #707070 !important ;
+  }
+  .rotated {
+    transform: rotate(90deg);
+  }
+
+  img {
+    height: 30px;
+    cursor: pointer;
+  }
+  .nav-link {
+    padding: 10px;
+    @media (max-width: 767px) {
+      display: flex;
+      padding: 0px;
+      color: #fff;
+      align-items: center;
+      gap: 10px;
+    }
+  }
+  @media (max-width: 767px) {
+    .icon {
+      filter: invert(1) grayscale(100%) contrast(100%) brightness(100%);
+    }
+  }
+  .mobile-nav {
+    list-style: none;
+    height: auto;
+    border: none;
+    background: #004cdf;
+    box-shadow: 0 1px 20px #b2b2b2;
+    color: #fff;
+    padding: 12px 10px;
+    transition: opacity 0.4s ease;
+    font-family: "Poppins-regular";
+    @include mobile() {
+      width: 288px;
+    }
+    @include tablet() {
+      width: 353px;
+    }
+    .nav-list {
+      border-top: 1px solid #ccc;
+      font-size: 16px;
+      padding: 10px 20px;
+      align-items: center;
+      &:hover {
+        background: #97b0e1;
+      }
+    }
+
+    .mobile-dropdown {
+      list-style: none;
+      background-color: #004cdf;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 10px 26px 10px 26px;
+      gap: 10px;
+
+      .dropdown-item {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        font-size: 13px;
+      }
+    }
+  }
+
+  .addButton {
+    position: relative;
+
+    .dropdown-menu {
+      top: 100% !important;
+      left: 0 !important;
+      right: auto !important;
+      padding: 5px;
+      .dropdown-item {
+        display: block;
+        text-decoration: none;
+        color: #748fad;
+        font-size: 16px;
+        padding: 4px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+      .dropdown-item:active {
+        background-color: transparent;
+      }
+    }
+    .dropdown-menu.show {
+      transform: translate(0px, 0px) !important;
+    }
+
+    .material-symbols-outlined {
+      font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24;
+      color: #748fad;
+      font-size: 25px;
+      @include mobile() {
+        color: #fff;
+      }
+      @include tablet() {
+        color: #fff;
+      }
+    }
+    .filledIcon {
+      font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 24;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .desktop-nav {
+      display: none;
+    }
+  }
+  @media (min-width: 767px) {
+    .desktop-nav {
+      display: block;
+    }
+  }
+}

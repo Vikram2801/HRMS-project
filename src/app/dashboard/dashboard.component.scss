@@ -1,0 +1,12 @@
+@use "../../variable.scss" as *;
+.container {
+  margin-left: 274px;
+  width: calc(100% - 274px);
+  position: relative;
+  top: 100px;
+
+  @include mobile() {
+    margin-left: 79px;
+    width: calc(100% - 79px);
+  }
+}

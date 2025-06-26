@@ -1,0 +1,212 @@
+@use "../../variable.scss" as *;
+
+.left-column {
+  background-color: #006af9;
+  text-align: center;
+  color: #a0a3b3;
+  vertical-align: middle;
+  padding: 10% 0 5% 0;
+  .info-text {
+    font-size: 16px;
+    font-family: "poppins-regular";
+  }
+  .products {
+    height: 350px;
+    margin: 60px 0;
+    .all-product {
+      background-image: url("/Ice_cream_seller.svg");
+      display: block;
+      background-repeat: no-repeat;
+      background-size: contain;
+      background-position: center;
+      height: 100%;
+      width: 100%;
+    }
+  }
+  .bottom {
+    font-size: 16px;
+    font-family: "poppins-regular";
+    text-align: center;
+    margin: 0 0 30px 0;
+
+    hr {
+      margin: 0 30px;
+    }
+    a {
+      text-decoration: none;
+    }
+    .info-text {
+      font-size: 16px;
+      text-align: center;
+    }
+    .text-white {
+      font-size: 13px;
+    }
+  }
+}
+.zibtekLogo {
+  display: flex;
+  justify-content: center;
+  padding: 0;
+  .logo {
+    height: 40px;
+    margin: 30px 0;
+    span {
+      font-size: 30px;
+      color: #737c85;
+    }
+  }
+  img {
+    width: 250px;
+    position: relative;
+    top: 80px;
+  }
+}
+.right {
+  gap: 31px;
+  // background-color: #ededed !important;
+}
+.content {
+  background: #fff;
+}
+.mobile-top {
+  background: #353752;
+  text-align: center;
+  position: sticky;
+  top: 0;
+  padding-bottom: 10px;
+  z-index: 1;
+  height: 80px;
+  .logo-cover {
+    height: 30px;
+    .logo {
+      background-image: url("/onboard_logo.png");
+      background-position: center;
+      background-repeat: no-repeat;
+      display: block;
+      background-size: 200px !important;
+      width: 100%;
+      height: 100%;
+      position: relative;
+      top: 16px;
+    }
+    .heading {
+      font-family: "poppins-regular";
+      color: #a0a3b3;
+      font-size: 11px;
+      position: relative;
+      top: 17px;
+    }
+  }
+}
+.right-column {
+  padding: 80px 0 !important;
+  position: relative;
+  width: 65%;
+  top: 25px;
+  height: 71%;
+  @include mobile() {
+    bottom: 0;
+    width: 92%;
+    height: auto;
+    top: 0;
+    padding: 42px 0 !important;
+  }
+  @include tablet() {
+    bottom: 0;
+    width: 80%;
+    height: auto;
+    top: 0;
+    padding: 42px 0 !important;
+  }
+  @include ipad() {
+    bottom: 0;
+    width: 80%;
+    height: auto;
+    top: 0;
+    padding: 42px 0 !important;
+  }
+  @include ipadpro() {
+    bottom: 0;
+    width: 80%;
+    height: auto;
+  }
+  @include ipadpro1() {
+    bottom: 0;
+    width: 80%;
+    height: auto;
+  }
+  @include laptop() {
+    bottom: 0;
+    width: 80%;
+    height: auto;
+  }
+  .example-full-width {
+    width: 100% !important;
+    .mat-mdc-form-field-error-wrapper {
+      padding: 0 !important;
+    }
+    .mat-mdc-form-field-error {
+      font-size: 14px !important;
+    }
+    .input.mat-mdc-input-element {
+      font-size: 18px;
+      font-family: "poppins-regular";
+    }
+    .mat-mdc-form-field-label {
+      font-family: "Poppins", sans-serif !important;
+    }
+    .mat-mdc-floating-label {
+      font-family: "poppins-regular";
+    }
+  }
+  // .cursor-pointer {
+  //   cursor: pointer;
+  // }
+  .login-form {
+    max-width: 520px;
+    @include mobile() {
+      max-width: 230px;
+    }
+    @include tablet() {
+      max-width: 330px;
+    }
+    @include ipadpro1() {
+      max-width: 461px;
+    }
+    .form-head {
+      font-size: 20px;
+      color: #525456;
+      font-family: "poppins-regular";
+    }
+  }
+  .form-check-input {
+    margin: 0 10px;
+  }
+  .form-check-label {
+    line-height: 14px;
+    color: #737c85;
+    display: block;
+    margin: 0;
+  }
+  .bottom-top {
+    font-family: "poppins-regular";
+    font-size: 15px;
+  }
+  .bottom-span {
+    font-family: "poppins-regular";
+    font-size: 15px;
+  }
+  .link {
+    text-decoration: none;
+    color: #94c43f;
+  }
+
+  // .form-Div {
+  //   background: #fff;
+  // }
+}
+
+::ng-deep .mat-mdc-form-field-label {
+  font-family: "Poppins", sans-serif !important;
+}

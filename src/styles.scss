@@ -1,0 +1,38 @@
+/* You can add global styles to this file, and also import other style files */
+
+html,
+body {
+  height: 100%;
+  overflow: visible !important;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
+  background: linear-gradient(90deg, #fcf6f7, #f1f8fc);
+}
+@font-face {
+  font-family: "Poppins-regular";
+  src: url("/poppins/Poppins-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+label {
+  font-family: "poppins-regular";
+}
+.cdk-overlay-container,
+.cdk-overlay-pane {
+  z-index: 4000 !important;
+}
+.mat-mdc-form-field-error-wrapper {
+  padding: 0 !important;
+}
+
+.mat-mdc-form-field-error {
+  font-size: 12px !important;
+}
+.mat-mdc-form-field-label {
+  font-family: "Poppins", sans-serif !important;
+}
+.mat-label {
+  font-family: "Poppins", sans-serif !important;
+}

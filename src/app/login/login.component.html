@@ -1,0 +1,120 @@
+<div class="container-fluid h-100">
+    <div class="row h-100">
+        <div class="col-12 col-lg-4 col-xl-4 left-column d-none d-lg-block">
+            <span class="info-text text-white">Welcome to Onboard HR </span>
+            <div class="products">
+                <span class="all-product img-fluid"></span>
+            </div>
+            <div class="bottom pt-5 mb-2 mt-1">
+                <hr />
+                <span class="info-text"><a href="https://www.tryoncourse.com/" target="_blank" class="text-white">Switch
+                        Apps</a></span>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8 col-xl-8 bg-light p-0 ">
+            <div class="row m-0 mobile-top d-block d-lg-none">
+                <div class="logo-Div ">
+                    <nav class="logo-cover">
+                        <span class="logo"></span>
+                        <span class="heading">
+                            Refreshing business software for all your teams
+                        </span>
+                    </nav>
+                </div>
+
+            </div>
+            <div class="row m-0">
+                <div class=" mx-auto d-flex align-items-center justify-content-center flex-column right">
+                    <div class="text-center mb-4 zibtekLogo">
+                        <img src="/onboard_logo.png" alt="onboard_logo" class="img-fluid d-none d-lg-block mx-auto" />
+                    </div>
+
+
+                    <div
+                        class="container-fluid content px-sm-0 px-md-0 p-lg-4 px-lg-5 p-md-4 right-column d-flex align-items-center justify-content-center flex-column">
+                        <div class="login-form w-100">
+                            <div class="form-Div">
+                                <form [formGroup]="loginForm">
+                                    <div class="d-block d-lg-none mb-4">
+                                        <span class="form-head">Sign in with freshteam</span>
+                                    </div>
+                                    <div class="col-12 mb-4">
+                                        <mat-form-field class="example-full-width" appearance="outline" [ngClass]="{
+                        'error-visible':
+                          loginForm.controls['email'].hasError('required') &&
+                          submitted
+                      }">
+                                            <mat-label>Email</mat-label>
+                                            <input matInput placeholder="Enter Email" formControlName="email"
+                                                required />
+                                            <mat-error class="errorMessage" *ngIf="
+                          loginForm.controls['email']?.hasError('required') &&
+                          submitted
+                        ">* Email is Required
+                                            </mat-error>
+                                            <mat-error class="errorMessage" *ngIf="
+                          loginForm.controls['email']?.hasError('pattern') &&
+                          submitted
+                        ">*Email is Invalid
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 mb-2">
+                                        <mat-form-field class="example-full-width" appearance="outline" [ngClass]="{
+                        'error-visible':
+                          loginForm.controls['password'].hasError('required') &&
+                          submitted
+                      }">
+                                            <mat-label>Password</mat-label>
+                                            <input matInput [type]="hide ? 'password' : 'text'"
+                                                placeholder="Enter Password*" formControlName="password" required />
+                                            <mat-icon matSuffix class="cursor-pointer" (click)="hide = !hide">{{
+                                                hide ? "visibility_off" : "visibility" }}</mat-icon>
+                                            <mat-error class="errorMessage" *ngIf="
+                          loginForm.controls['password']?.hasError(
+                            'required'
+                          ) && submitted
+                        ">*Password is Invalid
+                                            </mat-error>
+                                            <mat-error class="errorMessage" *ngIf="
+                          loginForm.controls['password']?.hasError('length') &&
+                          submitted
+                        ">*Password must be at least 8 characters
+                                            </mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div class="col-12 d-flex justify-content-between mb-2">
+                                        <div class="form-group d-flex gap-1">
+                                            <input type="checkbox" class="form-check-input" />
+                                            <label class="form-check-label">Keep me login</label>
+                                        </div>
+                                        <a class="link" href="#">Forgot Password?</a>
+                                    </div>
+                                </form>
+                                <button class="btn btn-primary w-100" (click)="onLog()">
+                                    Login
+                                </button>
+                                <div class="bottom-top mt-4">
+                                    <span>By clicking sign in, you agree to our
+                                        <a class="link" href="https://www.tryoncourse.com/termsofservice"
+                                            target="_blank">Terms & Conditions</a>
+                                        and
+                                        <a class="link" href="https://www.tryoncourse.com/privacypolicy">Privacy
+                                            Policy</a></span>
+                                </div>
+                                <div class="bottom-span mt-3 text-center">
+                                    <span>
+                                        Don't have an account?
+                                        <a class="link" href="#">Contact Us!</a></span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

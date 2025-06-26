@@ -1,0 +1,135 @@
+<div class="sideDiv">
+  <div>
+    <div>
+      <img src="/whiteFullLogo.png" alt="logo" class="image desktop-img" />
+      <img src="/whiteLogo.png" alt="logo" class="image mobile-img" />
+    </div>
+    <div class="navbar">
+      <div class="nav" routerLink="/dashboard" routerLinkActive="active">
+        <img class="icon" src="/navImg/dashboard whitelogo.png" alt="dashboard logo" />
+        <span>DashBoard</span>
+      </div>
+      <div class="nav" routerLink="/notification" routerLinkActive="active">
+        <img class="icon" src="/navImg/BellRinging.png" alt="Notification logo" />
+        <span>Notification</span>
+      </div>
+      <div class="nav" routerLink="/employee-dashboard" routerLinkActive="active">
+        <img class="icon" src="/navImg/UserSwitch.png" alt="User logo" />
+        <span>Employee Dashboard</span>
+      </div>
+      <div class="nav" routerLink="/leaves" routerLinkActive="active">
+        <img class="icon" src="/navImg/leave_svgrepo.com.png" alt="leave logo" />
+        <span>Leaves</span>
+      </div>
+      <div class="nav" routerLink="/setting" routerLinkActive="active">
+        <img class="icon" src="/navImg/Gear.png" alt="Setting logo" />
+        <span>Settings</span>
+      </div>
+    </div>
+  </div>
+  <div class="profileImg">
+    <span class="material-symbols-outlined logoutIcon">
+      arrow_circle_right
+    </span>
+    <div class="pro-detail">
+      <img src="/man.png" alt="man pic" class="img-fluid" />
+      <p>Siddhu Admin</p>
+      <span>ADMIN</span>
+    </div>
+  </div>
+</div>
+<div class="topNav">
+  <nav class="navbaar">
+
+
+    <span class="material-symbols-outlined toggle-icon " [ngClass]="{ 'rotated': isButton }" (click)="toggleMenu()">
+      {{ isButton ? 'close' : 'menu' }}
+    </span>
+
+    <div *ngIf="isButton">
+      <ul class="mobile-nav">
+        <li class="addButton nav-list">
+          <a class="nav-link" (click)='mobileDrop()'>
+            <img class="icon" src="/navImg/PlusCircle.png" alt="" /> <span>Add New</span></a>
+          <ul *ngIf="isDrop" class="mobile-dropdown">
+            <li>
+              <a class="dropdown-item " href="#">
+                <span class="material-symbols-outlined filledIcon"> business_center </span>
+                <span>Job Posting</span></a>
+            </li>
+            <li>
+              <a class="dropdown-item" (click)="openModal()" data-bs-toggle="modal" data-bs-target="#exampleModal"
+                data-bs-whatever="@mdo">
+                <span class="material-symbols-outlined filledIcon"> person </span>
+                <span>Employee</span></a>
+            </li>
+            <li>
+              <a class="dropdown-item" href="#">
+                <span class="material-symbols-outlined"> grading </span>
+                <span>Task</span></a>
+            </li>
+          </ul>
+        </li>
+
+        <li class="nav-list">
+          <a class="nav-link" href=""><img class="icon" src="navImg/Cake.png" alt="cake logo" />
+            <span>Birthdays</span>
+          </a>
+        </li>
+        <li class="nav-list">
+          <a class="nav-link" href=""><img class="icon" class="icon" src="/navImg/Bell.png" alt="Notification logo" />
+            <span>Notifications</span>
+          </a>
+        </li>
+        <li class="nav-list">
+          <a class="nav-link" href="">
+            <img class="icon" src="/navImg/UserCircle.png" alt="" />
+            <span>Siddhu Admin</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <div class="desktop-nav">
+    <ul class="nav">
+      <li class="addButton">
+        <a class="nav-link" data-bs-toggle="dropdown" aria-expanded="false">
+          <img src="/navImg/PlusCircle.png" alt="" /></a>
+        <ul class="dropdown-menu">
+          <li>
+            <a class="dropdown-item" href="#">
+              <span class="material-symbols-outlined filledIcon"> business_center </span>
+              <span>Job Posting</span></a>
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="openModal()">
+              <span class="material-symbols-outlined filledIcon"> person </span>
+              <span>Employee</span></a>
+          </li>
+          <li>
+            <a class="dropdown-item" href="#">
+              <span class="material-symbols-outlined"> grading </span>
+              <span>Task</span></a>
+          </li>
+        </ul>
+      </li>
+
+      <li>
+        <a class="nav-link" href=""><img src="navImg/Cake.png" alt="cake logo" />
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href=""><img class="icon" src="/navImg/Bell.png" alt="Notification logo" />
+        </a>
+      </li>
+      <li>
+        <a class="nav-link" href="">
+          <img src="/navImg/UserCircle.png" alt="" />
+        </a>
+      </li>
+    </ul>
+
+  </div>
+</div>
+<app-employee *ngIf="isModal"></app-employee>
+<router-outlet></router-outlet>
