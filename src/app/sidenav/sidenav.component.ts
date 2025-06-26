@@ -31,13 +31,7 @@ export class SidenavComponent {
      debugger
      this.isModal=true;
    
-    const modalEl = document.getElementById('exampleModal');
-  if (modalEl) {
-    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
-    modal.show();
-  } else {
-    console.error('Modal element not found!');
-  }
+    // const modalEl = document.getElementById('exampleModal');
     
 
   }
