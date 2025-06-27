@@ -1,20 +1,32 @@
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import { Router, RouterLink, RouterLinkActive, RouterOutlet } from '@angular/router';
+import {
+  Router,
+  RouterLink,
+  RouterLinkActive,
+  RouterOutlet,
+} from '@angular/router';
 import { EmployeeComponent } from '../employee/employee.component';
 declare var bootstrap: any;
 @Component({
   selector: 'app-sidenav',
-  imports: [RouterLinkActive, RouterLink, CommonModule,RouterOutlet,EmployeeComponent],
+  imports: [
+    RouterLinkActive,
+    RouterLink,
+    CommonModule,
+    RouterOutlet,
+    EmployeeComponent,
+  ],
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
 export class SidenavComponent {
   isButton = false;
-  isDrop=false;
-  isModal=false;
+  isDrop = false;
+  isModal = false;
+  isDropdownOpen: boolean = false;
   isAddNewOpen: boolean = false;
-  router=inject(Router)
+  router = inject(Router);
 
   toggleAddNew() {
     this.isAddNewOpen = !this.isAddNewOpen;
@@ -23,16 +35,13 @@ export class SidenavComponent {
   toggleMenu() {
     this.isButton = !this.isButton;
   }
-  mobileDrop(){
-    this.isDrop=!this.isDrop
-
+  mobileDrop() {
+    this.isDrop = !this.isDrop;
   }
-  openModal(){
-     debugger
-     this.isModal=true;
-   
-    // const modalEl = document.getElementById('exampleModal');
-    
-
+  openModal() {
+    this.isModal = true;
+  }
+  openDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen; 
   }
 }

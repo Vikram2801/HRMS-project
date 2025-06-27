@@ -58,8 +58,7 @@
                 <span>Job Posting</span></a>
             </li>
             <li>
-              <a class="dropdown-item" (click)="openModal()" data-bs-toggle="modal" data-bs-target="#exampleModal"
-                data-bs-whatever="@mdo">
+              <a class="dropdown-item" (click)="openModal()" data-bs-whatever="@mdo">
                 <span class="material-symbols-outlined filledIcon"> person </span>
                 <span>Employee</span></a>
             </li>
@@ -82,10 +81,26 @@
           </a>
         </li>
         <li class="nav-list">
-          <a class="nav-link" href="">
+          <a class="nav-link" (click)="openDropdown()">
             <img class="icon" src="/navImg/UserCircle.png" alt="" />
             <span>Siddhu Admin</span>
           </a>
+          <ul *ngIf="isDropdownOpen" class="mobile-dropdown ">
+            <li>
+              <a class="dropdown-item" href="">
+                <img src="/man.png" alt="profileImg" class="img-fluid pro-image" />
+                <h3>Siddu Admin</h3>
+              </a>
+            </li>
+            <hr>
+            <li>
+              <a class="dropdown-item logout" href="">
+                <span>Sign Out</span>
+                <span class="material-symbols-outlined logoutIcon"> logout </span>
+
+              </a>
+            </li>
+          </ul>
         </li>
       </ul>
     </div>
@@ -101,7 +116,7 @@
               <span class="material-symbols-outlined filledIcon"> business_center </span>
               <span>Job Posting</span></a>
           </li>
-          <li>
+          <li style="cursor: pointer;">
             <a class="dropdown-item" (click)="openModal()">
               <span class="material-symbols-outlined filledIcon"> person </span>
               <span>Employee</span></a>
@@ -123,9 +138,25 @@
         </a>
       </li>
       <li>
-        <a class="nav-link" href="">
+        <a class="nav-link" href="" data-bs-toggle="dropdown" aria-expanded="false">
           <img src="/navImg/UserCircle.png" alt="" />
         </a>
+        <ul class="dropdown-menu profile-dropdown">
+          <li>
+            <a class="dropdown-item" href="">
+              <img src="/man.png" alt="profileImg" class="img-fluid pro-image" />
+              <h3>Siddu Admin</h3>
+            </a>
+          </li>
+          <hr>
+          <li>
+            <a class="dropdown-item logout" href="">
+              <span>Sign Out</span>
+              <span class="material-symbols-outlined logoutIcon"> logout </span>
+
+            </a>
+          </li>
+        </ul>
       </li>
     </ul>
 
