@@ -1,1 +1,114 @@
-<p>employeedashboard works!</p>
+<div class="loading-div" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+</div>
+<div class="container">
+    <mat-tab-group>
+        <mat-tab label="Employees">
+            <ng-container>
+                <div class="main-content">
+                    <div class="table-responsive card">
+                        <div class="scrollable-table">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th class="text-center">
+                                            <div>
+                                                <input type="checkbox" />
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="d-flex">
+                                                <span>EMPLOYEE ID</span>
+                                                <span class="material-symbols-outlined swapICon">swap_vert</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="d-flex">
+                                                <span>EMPLOYEE</span>
+                                                <span class="material-symbols-outlined swapICon">swap_vert</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="d-flex">
+                                                <span>DEPARTMENT</span>
+                                                <span class="material-symbols-outlined swapICon">swap_vert</span>
+                                            </div>
+                                        </th>
+                                        <th>
+                                            <div class="d-flex">
+                                                <span>DESIGNATION</span>
+                                                <span class="material-symbols-outlined swapICon">swap_vert</span>
+                                            </div>
+                                        </th>
+
+                                        <th>
+                                            <div class="d-flex">
+                                                <span>STATUS</span>
+                                                <span class="material-symbols-outlined swapICon">swap_vert</span>
+                                            </div>
+                                        </th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr *ngFor="let employee of employees">
+                                        <td>
+                                            <div class="text-center">
+                                                <input type="checkbox" />
+                                            </div>
+                                        </td>
+                                        <td>{{ employee.employeeId }}</td>
+                                        <td (click)="openModal(employee)">
+                                            <div class="d-flex align-items-center gap-2">
+                                                <div *ngIf="employee.employeePhoto">
+                                                    <img [src]="employee.employeePhoto" alt="profile"
+                                                        class="img-fluid" />
+                                                </div>
+                                                <div *ngIf="!employee.employeePhoto">
+                                                    <div class="initial-image">
+                                                        <span>{{ employee.firstName.charAt(0) }}</span>
+                                                    </div>
+                                                </div>
+                                                <div>
+                                                    <label class="name">{{ employee.firstName }}
+                                                        {{ employee.lastName }}</label>
+                                                    <p class="email">{{ employee.companyEmail }}</p>
+                                                </div>
+                                            </div>
+                                        </td>
+                                        <td>{{ employee.department }}</td>
+                                        <td>{{ employee.role | titlecase }}</td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-2">
+                                                <span class="material-symbols-outlined brightness_1"
+                                                    style="font-variation-settings: 'FILL' 1;">brightness_1</span>
+                                                <span>{{ employee.employeeStatus }}</span>
+
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex align-items-center gap-4">
+                                                <span class="material-symbols-outlined editIcon">edit</span>
+                                                <span class="material-symbols-outlined deleteIcon">delete</span>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <mat-paginator [pageSizeOptions]="[5, 10, 20]" [pageSize]="limit" [length]="totalEmployees"
+                            (page)="OnPageChange($event)" showFirstLastButtons
+                            aria-label="Select page of periodic elements">
+                        </mat-paginator>
+                    </div>
+                </div>
+            </ng-container>
+        </mat-tab>
+        <mat-tab label="Attendance"> Content 2 </mat-tab>
+        <mat-tab label="Leaves"> Content 3 </mat-tab>
+        <mat-tab label="Documents"> Content 3 </mat-tab>
+    </mat-tab-group>
+</div>
+
+<app-employeedetails *ngIf="isModal" [empId]="userId" [orgId]="employeeId"></app-employeedetails>

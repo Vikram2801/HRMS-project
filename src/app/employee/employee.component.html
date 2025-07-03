@@ -1,11 +1,13 @@
-<!-- <div class="modal-backdrop" *ngIf="isModalOpen" (click)="closeModal()"></div> -->
+<div class="loading-div" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+</div>
 <div class="modal fade slide-in-right" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
     aria-hidden="true">
     <div class="modal-dialog modal-slideout">
         <div class="modal-content">
             <div class="modal-header addEmployee">
                 <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="close()">
                     <span class="material-symbols-outlined close-icon"> close </span>
                 </button>
             </div>
@@ -28,15 +30,15 @@
                                     <div class="form-group">
                                         <mat-form-field class="example-full-width" appearance="outline" [ngClass]="{
                         'error-visible':
-                          employeeForm.controls['firstname'].hasError(
+                          employeeForm.controls['firstName'].hasError(
                             'required'
                           ) && submitted
                       }">
                                             <mat-label>First Name</mat-label>
                                             <input matInput placeholder="Enter First Name" required
-                                                formControlName="firstname" />
+                                                formControlName="firstName" />
                                             <mat-error class="errorMessage" *ngIf="
-                          employeeForm.controls['firstname']?.hasError(
+                          employeeForm.controls['firstName']?.hasError(
                             'required'
                           ) && submitted
                         ">* FirstName Required
@@ -48,15 +50,15 @@
                                     <div class="form-group">
                                         <mat-form-field class="example-full-width" appearance="outline" [ngClass]="{
                         'error-visible':
-                          employeeForm.controls['lastname'].hasError(
+                          employeeForm.controls['lastName'].hasError(
                             'required'
                           ) && submitted
                       }">
                                             <mat-label>Last Name</mat-label>
                                             <input matInput placeholder=" Enter Last Name" required
-                                                formControlName="lastname" />
+                                                formControlName="lastName" />
                                             <mat-error class="errorMessage" *ngIf="
-                          employeeForm.controls['lastname']?.hasError(
+                          employeeForm.controls['lastName']?.hasError(
                             'required'
                           ) && submitted
                         ">* LastName Required
@@ -87,20 +89,24 @@
                                     </div>
                                 </div>
                                 <div class="col-12 col-md-6">
-                                    <div class="form-group ">
+                                    <div class="form-group">
                                         <label>Gender</label>
                                         <div class="radio">
                                             <mat-radio-group aria-label="Select Gender" formControlName="gender"
-                                                [ngClass]="{'error-visible':employeeForm.controls['gender'].hasError(
+                                                [ngClass]="{
+                          'error-visible':
+                            employeeForm.controls['gender'].hasError(
                               'required'
                             ) && submitted
                         }">
                                                 <mat-radio-button value="Male">Male</mat-radio-button>
                                                 <mat-radio-button value="Female">Female</mat-radio-button>
                                                 <mat-radio-button value="others">Others</mat-radio-button>
-                                                <mat-error class="errorMessage"
-                                                    *ngIf="employeeForm.controls['gender']?.hasError('required') && submitted">*
-                                                    Gender Required
+                                                <mat-error class="errorMessage" *ngIf="
+                            employeeForm.controls['gender']?.hasError(
+                              'required'
+                            ) && submitted
+                          ">* Gender Required
                                                 </mat-error>
                                             </mat-radio-group>
                                         </div>
@@ -148,19 +154,19 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline" [ngClass]="{
                       'error-visible':
-                        employeeForm.controls['email'].hasError('required') &&
+                        employeeForm.controls['personalEmailId'].hasError('required') &&
                         submitted
                     }">
                                         <mat-label>Personal Email ID</mat-label>
                                         <input matInput placeholder=" Enter Personal Email ID"
-                                            formControlName="email" />
+                                            formControlName="personalEmailId" />
                                         <mat-error class="errorMessage" *ngIf="
-                        employeeForm.controls['email']?.hasError('required') &&
+                        employeeForm.controls['personalEmailId']?.hasError('required') &&
                         submitted
                       ">*Personal Email is Required
                                         </mat-error>
                                         <mat-error class="errorMessage" *ngIf="
-                        employeeForm.controls['email']?.hasError('pattern') &&
+                        employeeForm.controls['personalEmailId']?.hasError('pattern') &&
                         submitted
                       ">*Email is Invalid
                                         </mat-error>
@@ -169,27 +175,28 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline" [ngClass]="{
                       'error-visible':
-                        employeeForm.controls['phoneNumber'].hasError(
+                        employeeForm.controls['personalPhoneNumber'].hasError(
                           'required'
                         ) && submitted
                     }">
                                         <mat-label>Personal Number</mat-label>
                                         <input matInput placeholder=" Enter Personal Number"
-                                            formControlName="phoneNumber"
+                                            formControlName="personalPhoneNumber"
                                             onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
                                             minlength="10" />
                                         <mat-error class="errorMessage" *ngIf="
-                        employeeForm.controls['phoneNumber']?.hasError(
+                        employeeForm.controls['personalPhoneNumber']?.hasError(
                           'required'
                         ) && submitted
-                      "> *Personal Number is Required
+                      ">
+                                            *Personal Number is Required
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <mat-form-field appearance="outline" class="example-full-width">
                                         <mat-label>Married Status</mat-label>
-                                        <mat-select placeholder="select Married Status" formControlName="marriedStatus">
+                                        <mat-select placeholder="select Married Status" formControlName="maritalStatus">
                                             <mat-option disabled>select</mat-option>
                                             <mat-option *ngFor="let status of married" [value]="status">{{ status
                                                 }}</mat-option>
@@ -221,20 +228,20 @@
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Contact Person Name</mat-label>
                                         <input matInput placeholder=" Enter Contact Person Name"
-                                            formControlName="personName" />
+                                            formControlName="emergencyContactPerson" />
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Relation</mat-label>
-                                        <input matInput placeholder=" Enter Relation" formControlName="relation" />
+                                        <input matInput placeholder=" Enter Relation" formControlName="relationBy" />
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Emergency Phone Number</mat-label>
                                         <input matInput placeholder=" Enter Emergency Phone Number"
-                                            formControlName="emergencyNumber" />
+                                            formControlName="emergencyPhoneNumber" />
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -348,7 +355,7 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field appearance="outline" class="example-full-width">
                                         <mat-label>Department</mat-label>
-                                        <mat-select placeholder="select Department" formControlName="Department">
+                                        <mat-select placeholder="select Department" formControlName="department">
                                             <mat-option disabled>select</mat-option>
                                             <mat-option value="Accountant">Accountant</mat-option>
                                             <mat-option value="Analyst">Analyst</mat-option>
@@ -362,7 +369,7 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field appearance="outline" class="example-full-width">
                                         <mat-label>Reporting to</mat-label>
-                                        <mat-select placeholder="select Reporting to" formControlName="reportTo">
+                                        <mat-select placeholder="select Reporting to" formControlName="reportingTo">
                                             <mat-option disabled>select</mat-option>
                                         </mat-select>
                                     </mat-form-field>
@@ -387,7 +394,8 @@
                         employeeForm.controls['employeeStatus']?.hasError(
                           'required'
                         ) && submitted
-                      "> *Employee Status is Required
+                      ">
+                                            *Employee Status is Required
                                         </mat-error>
                                     </mat-form-field>
                                 </div>
@@ -416,7 +424,7 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field appearance="outline" class="example-full-width">
                                         <mat-label>Date of joining</mat-label>
-                                        <input matInput [matDatepicker]="picker" formControlName="dateJoin" />
+                                        <input matInput [matDatepicker]="picker" formControlName="dateOfJoining" />
                                         <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                                         <mat-datepicker #picker></mat-datepicker>
                                     </mat-form-field>
@@ -435,20 +443,21 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label> Bank Code</mat-label>
-                                        <input matInput placeholder=" Enter Bank Code" formControlName="bankCode" />
+                                        <input matInput placeholder="Enter Bank Code" formControlName="bankCode" />
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label> Bank Account Number</mat-label>
                                         <input matInput placeholder=" Enter Bank Account Number"
-                                            formControlName="bankAccount" />
+                                            formControlName="bankAccountNumber" />
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-md-6">
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label> PF A/C Number</mat-label>
-                                        <input matInput placeholder=" Enter PF A/C Number" formControlName="pfNumber" />
+                                        <input matInput placeholder=" Enter PF A/C Number"
+                                            formControlName="pfAccountNumber" />
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -465,11 +474,12 @@
                                 <div class="header">
                                     <h3>Previous Experience</h3>
                                 </div>
-                                <div formArrayName="experience" class="mt-3">
-                                    <div *ngFor="let item of experience.controls; let i = index" [formGroupName]="i">
+                                <div formArrayName="previousExperience" class="mt-3">
+                                    <div *ngFor="let item of previousExperience.controls; let i = index"
+                                        [formGroupName]="i">
                                         <div class="closeDiv" (click)="removeExperience(i)"
-                                            *ngIf="experience.length > 1">
-                                            <span class="material-symbols-outlined">close</span>
+                                            *ngIf=" previousExperience.length > 1">
+                                            <span class="material-symbols-outlined close-icon">close</span>
                                         </div>
 
                                         <div class="row">
@@ -487,17 +497,20 @@
                                                         formControlName="designation" />
                                                 </mat-form-field>
                                             </div>
-                                            <div class="col-12 col-md-8 merge">
-                                                <mat-form-field class="example-full" appearance="outline" class="year">
-                                                    <mat-label>Experience in Years</mat-label>
-                                                    <input matInput placeholder=" Enter Experience in Years"
-                                                        formControlName="years" />
-                                                </mat-form-field>
-                                                <mat-form-field class="example-full" appearance="outline" class="year">
-                                                    <mat-label>Experience in Months</mat-label>
-                                                    <input matInput placeholder=" Enter Experience in Months"
-                                                        formControlName="months" />
-                                                </mat-form-field>
+                                            <div class="col-12 col-md-8 ">
+                                                <div class="merge">
+                                                    <mat-form-field appearance="outline" class="custom-left">
+                                                        <mat-label>Experience in Years</mat-label>
+                                                        <input matInput formControlName="years"
+                                                            placeholder="Enter Years" />
+                                                    </mat-form-field>
+
+                                                    <mat-form-field appearance="outline" class="custom-right">
+                                                        <mat-label>Experience in Months</mat-label>
+                                                        <input matInput formControlName="months"
+                                                            placeholder="Enter Months" />
+                                                    </mat-form-field>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -510,10 +523,10 @@
                                 <div class="header">
                                     <h3>Documents Information</h3>
                                 </div>
-                                <div formArrayName="document" class="mt-3">
-                                    <div *ngFor="let doc of document.controls; let i = index" [formGroupName]="i">
-                                        <div class="closeDiv" (click)="removeDocument(i)" *ngIf="document.length > 1">
-                                            <span class="material-symbols-outlined">close</span>
+                                <div formArrayName="documents" class="mt-3">
+                                    <div *ngFor="let doc of documents.controls; let i = index" [formGroupName]="i">
+                                        <div class="closeDiv" (click)="removeDocument(i)" *ngIf="documents.length > 1">
+                                            <span class="material-symbols-outlined close-icon">close</span>
                                         </div>
                                         <div class="row">
                                             <div class="col-12 col-md-6">
@@ -546,17 +559,17 @@
                                                         (change)="onFileUpload($event, i)" style="display: none" />
                                                     <label class="upload d-flex">
                                                         <p *ngIf="
-                                document.at(i).get('uploadFileName')?.value;
+                                documents.at(i).get('uploadFileName')?.value;
                                 else placeholder
                               ">
-                                                            {{ document.at(i).get("uploadFileName")?.value }}
+                                                            {{ documents.at(i).get("uploadFileName")?.value }}
                                                         </p>
 
                                                         <ng-template #placeholder>
                                                             <p>Drop file here to upload</p>
                                                         </ng-template>
                                                     </label>
-                                                    <span *ngIf="document.at(i).get('uploadFileName')?.value"
+                                                    <span *ngIf="documents.at(i).get('uploadFileName')?.value"
                                                         class="material-symbols-outlined cancelIcon"
                                                         (click)="removeFile(i); $event.stopPropagation()">
                                                         cancel

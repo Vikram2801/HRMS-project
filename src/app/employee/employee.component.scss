@@ -148,16 +148,15 @@ h3 {
       }
 
       .mat-mdc-form-field-infix {
-        padding: 10px 15px;
+        padding: 15px;
       }
       .mat-mdc-floating-label {
         color: #748fad;
       }
 
-      input.mat-mdc-input-element {
-        font-size: 18px;
-        padding: 10px 0px;
-      }
+      // input.mat-mdc-input-element {
+      //   font-size: 18px;
+      // }
     }
     .errorMessage {
       font-size: 12px !important;
@@ -200,10 +199,10 @@ h3 {
       }
     }
 
-    span {
-      font-size: 14px;
-      color: #748fad;
-    }
+    // span {
+    //   font-size: 17px;
+    // }
+
     .text {
       position: relative;
       top: 25px;
@@ -244,32 +243,57 @@ h3 {
   border-bottom: 1px solid #ccc;
   padding: 8px;
 }
+.addIcon {
+  color: #748fad;
+  font-size: 20px !important;
+}
+.close-icon {
+  font-size: 21px !important;
+}
 .experienceDiv {
   background: #fff;
   border-radius: 4px;
   padding: 12px;
   box-shadow: 1px 1px 20px #80808036;
   margin-bottom: 10px;
-
-  .addIcon {
-    color: #748fad;
-  }
-
   .closeDiv {
     display: flex;
     justify-content: end;
     color: #748fad;
   }
+
   .merge {
     display: flex;
-    .example-full {
-      border-radius: 1px !important;
+
+    mat-form-field {
+      flex: 1;
+      margin-right: 0;
+
+      .mat-form-field-outline {
+        border-radius: 0;
+      }
+      .mdc-floating-label {
+        color: #748fad;
+        font-family: "poppins-regular";
+      }
+    }
+
+    .custom-left .mat-form-field-outline-start {
+      border-top-right-radius: 0 !important;
+      border-bottom-right-radius: 0 !important;
+    }
+
+    .custom-right .mat-form-field-outline-end {
+      border-top-left-radius: 0 !important;
+      border-bottom-left-radius: 0 !important;
+    }
+
+    .custom-left {
+      margin-right: -1px;
     }
   }
-  .merge.mat-form-field {
-    flex: 1;
-  }
 }
+
 .info-div {
   background: #fff;
   border-radius: 4px;
@@ -372,5 +396,5 @@ h3 {
   }
 }
 ::ng-deep.mat-mdc-text-field-wrapper {
-  height: 54px !important;
+  height: 50px !important;
 }

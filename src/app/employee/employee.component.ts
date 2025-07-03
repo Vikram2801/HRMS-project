@@ -30,6 +30,7 @@ import {
   LoadedImage,
 } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 declare var bootstrap: any;
 
@@ -45,14 +46,14 @@ declare var bootstrap: any;
     ImageCropperComponent,
     ReactiveFormsModule,
     MatRadioModule,
-   
+    MatProgressSpinnerModule
   ],
   templateUrl: './employee.component.html',
   styleUrl: './employee.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
   encapsulation: ViewEncapsulation.None,
 })
-export class EmployeeComponent implements OnInit,AfterViewInit {
+export class EmployeeComponent implements OnInit, AfterViewInit {
   employeeForm!: FormGroup;
   submitted: Boolean = false;
   file: File | null = null;
@@ -68,6 +69,7 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
   currentStep: number = 1;
   uploadFileName: string | null = '';
   savedImage: any = '';
+  isLoading: boolean = false;
   isBrowser: boolean;
   employeeStatuses: string[] = [
     'Active',
@@ -234,18 +236,10 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
     this.isBrowser = isPlatformBrowser(this.platformId);
   }
   photoModal: any;
-  exampleModal:any;
+  exampleModal: any;
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      const modalEl = document.getElementById('exampleModal');
-      if (modalEl) {
-        this.exampleModal = new bootstrap.Modal(modalEl);
-        this.exampleModal.show();
-      } else {
-        console.error('Photo modal element not found');
-      }
-    }
+
     if (isPlatformBrowser(this.platformId)) {
       const modalEl = document.getElementById('photoModal');
       if (modalEl) {
@@ -259,23 +253,23 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
 
   ngOnInit(): void {
     this.employeeForm = new FormGroup({
-      firstname: new FormControl('', Validators.required),
-      lastname: new FormControl('', Validators.required),
+      firstName: new FormControl('', Validators.required),
+      lastName: new FormControl('', Validators.required),
       employeePhoto: new FormControl(''),
       gender: new FormControl('', Validators.required),
       dob: new FormControl('', Validators.required),
       bloodGroups: new FormControl('', Validators.required),
-      email: new FormControl('', [
+      personalEmailId: new FormControl('', [
         Validators.required,
         Validators.pattern(/^[\w+]+([\.-]?\w+)\+?\d@[\w-]+(\.\w+){1,2}$/i),
       ]),
-      phoneNumber: new FormControl('', Validators.required),
-      marriedStatus: new FormControl(''),
+      personalPhoneNumber: new FormControl('', Validators.required),
+      maritalStatus: new FormControl(''),
       panNumber: new FormControl(''),
       uanNumber: new FormControl(''),
-      personName: new FormControl(''),
-      relation: new FormControl(''),
-      emergencyNumber: new FormControl(''),
+      emergencyContactPerson: new FormControl(''),
+      relationBy: new FormControl(''),
+      emergencyPhoneNumber: new FormControl(''),
       street: new FormControl(''),
       city: new FormControl(''),
       country: new FormControl(''),
@@ -287,26 +281,26 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
         Validators.pattern(/^[\w+]+([\.-]?\w+)\+?\d@[\w-]+(\.\w+){1,2}$/i),
       ]),
       designation: new FormControl('', Validators.required),
-      Department: new FormControl(''),
-      reportTo: new FormControl(''),
+      department: new FormControl(''),
+      reportingTo: new FormControl(''),
       employeeStatus: new FormControl('', Validators.required),
       employeeType: new FormControl(''),
       workShift: new FormControl(''),
-      dateJoin: new FormControl(''),
+      dateOfJoining: new FormControl(''),
       bankName: new FormControl(''),
       bankCode: new FormControl(''),
-      bankAccount: new FormControl(''),
-      pfNumber: new FormControl(''),
-      experience: new FormArray([this.createExperience()]),
-      document: new FormArray([this.createDocument()]),
+      bankAccountNumber: new FormControl(''),
+      pfAccountNumber: new FormControl(''),
+      previousExperience: new FormArray([this.createExperience()]),
+      documents: new FormArray([this.createDocument()]),
     });
   }
 
-  get experience(): FormArray {
-    return this.employeeForm.get('experience') as FormArray;
+  get previousExperience(): FormArray {
+    return this.employeeForm.get('previousExperience') as FormArray;
   }
-  get document(): FormArray {
-    return this.employeeForm.get('document') as FormArray;
+  get documents(): FormArray {
+    return this.employeeForm.get('documents') as FormArray;
   }
 
   createExperience(): FormGroup {
@@ -327,19 +321,19 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
   }
 
   addExperience(): void {
-    this.experience.push(this.createExperience());
+    this.previousExperience.push(this.createExperience());
   }
   removeExperience(index: number): void {
-    if (this.experience.length > 1) {
-      this.experience.removeAt(index);
+    if (this.previousExperience.length > 1) {
+      this.previousExperience.removeAt(index);
     }
   }
   addDocument(): void {
-    this.document.push(this.createDocument());
+    this.documents.push(this.createDocument());
   }
   removeDocument(index: number): void {
-    if (this.document.length > 1) {
-      this.document.removeAt(index);
+    if (this.documents.length > 1) {
+      this.documents.removeAt(index);
     }
   }
 
@@ -360,6 +354,11 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
       this.cdr.detectChanges();
     }
   }
+  close() {
+    const modalEl = document.getElementById('employeeModal');
+    const modalInstance = bootstrap.Modal.getInstance(modalEl);
+    modalInstance?.hide();
+  }
 
   onFileSelected(event: Event): void {
     if (!this.isBrowser) return;
@@ -373,33 +372,32 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
   }
 
   imageCropped(event: ImageCroppedEvent) {
-   
-     if (event.base64) {
-    this.croppedImage = event.base64;
-  } else {
-    console.warn('No base64 returned');
-    this.croppedImage = event.objectUrl || '';
-  }
+    if (event.base64) {
+      this.croppedImage = event.base64;
+    } else {
+      console.warn('No base64 returned');
+      this.croppedImage = event.objectUrl || '';
+    }
   }
   imageLoaded(image: LoadedImage) { }
   cropperReady() { }
   loadImageFailed() { }
   saveImage() {
-   
-    
     this.savedImage = this.croppedImage;
     this.employeeForm.patchValue({ employeePhoto: this.savedImage });
-    console.log('saveimage',this.savedImage);
+    console.log('saveimage', this.savedImage);
     this.cdr.detectChanges();
     this.closeModal();
   }
-  cancelImage(){
-    this.savedImage=null;
+  cancelImage() {
+    this.savedImage = null;
   }
 
   triggerFileInput() {
     if (this.isBrowser) {
-      const fileInput = document.getElementById('fileInput') as HTMLInputElement;
+      const fileInput = document.getElementById(
+        'fileInput'
+      ) as HTMLInputElement;
       if (fileInput) {
         fileInput.click();
       } else {
@@ -410,8 +408,8 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
   onFileUpload(event: Event, index: number): void {
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      const file :File= input.files[0];
-      this.document.at(index).patchValue({
+      const file: File = input.files[0];
+      this.documents.at(index).patchValue({
         file: file,
         uploadFileName: file.name,
       });
@@ -419,23 +417,24 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
     }
   }
   convertBlobToBase64(blob: Blob): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const reader = new FileReader();
-    reader.onloadend = () => resolve(reader.result as string);
-    reader.onerror = () => reject('Blob to base64 conversion failed');
-    reader.readAsDataURL(blob);
-  });
-}
-
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => resolve(reader.result as string);
+      reader.onerror = () => reject('Blob to base64 conversion failed');
+      reader.readAsDataURL(blob);
+    });
+  }
 
   removeFile(index: number): void {
-    this.document.at(index).patchValue({
+    this.documents.at(index).patchValue({
       file: null,
       uploadFileName: '',
     });
 
     if (this.isBrowser) {
-      const input = document.getElementById(`uploadInput${index}`) as HTMLInputElement;
+      const input = document.getElementById(
+        `uploadInput${index}`
+      ) as HTMLInputElement;
       if (input) {
         input.value = '';
       }
@@ -444,7 +443,9 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
 
   triggerFileupload(index: number): void {
     if (this.isBrowser) {
-      const input = document.getElementById(`uploadInput${index}`) as HTMLInputElement;
+      const input = document.getElementById(
+        `uploadInput${index}`
+      ) as HTMLInputElement;
       if (input) {
         input?.click();
       }
@@ -458,8 +459,10 @@ export class EmployeeComponent implements OnInit,AfterViewInit {
     if (this.currentStep < 3) this.currentStep++;
   }
   onsubmit() {
+    this.isLoading = true;
     if (this.employeeForm.invalid) {
       this.submitted = true;
+      this.isLoading = false;
       this.employeeForm.markAllAsTouched();
       this.currentStep = 1;
       return;

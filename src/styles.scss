@@ -39,3 +39,18 @@ label {
 .mat-label {
   font-family: "Poppins", sans-serif !important;
 }
+.mat-mdc-tab-body-content {
+  overflow: hidden !important;
+}
+.loading-div {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: #00000080;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}

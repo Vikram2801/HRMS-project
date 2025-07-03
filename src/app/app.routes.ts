@@ -7,19 +7,20 @@ import { SettingsComponent } from './settings/settings.component';
 import { NotificationComponent } from './notification/notification.component';
 import { LoginComponent } from './login/login.component';
 import { SidenavComponent } from './sidenav/sidenav.component';
+import { authGuard } from './guard/auth.guard';
 
 export const routes: Routes = [
   { path: '', redirectTo: '/login', pathMatch: 'full' },
   {
     path: '',
     component: SidenavComponent,
+    canActivate: [authGuard],
     children: [
-      // { path: 'employee', component: EmployeeComponent },
-      { path: 'dashboard', component: DashboardComponent },
-      { path: 'notification', component: NotificationComponent },
-      { path: 'employee-dashboard', component: EmployeedashboardComponent },
-      { path: 'leaves', component: LeavesComponent },
-      { path: 'settings', component: SettingsComponent }, 
+      { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+      { path: 'notification', component: NotificationComponent},
+      { path: 'employee-dashboard', component: EmployeedashboardComponent},
+      { path: 'leaves', component: LeavesComponent},
+      { path: 'settings', component: SettingsComponent}, 
     ],
   },
   { path: 'login', component: LoginComponent },

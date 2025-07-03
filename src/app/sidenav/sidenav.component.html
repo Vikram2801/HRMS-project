@@ -21,7 +21,7 @@
         <img class="icon" src="/navImg/leave_svgrepo.com.png" alt="leave logo" />
         <span>Leaves</span>
       </div>
-      <div class="nav" routerLink="/setting" routerLinkActive="active">
+      <div class="nav" routerLink="/settings" routerLinkActive="active">
         <img class="icon" src="/navImg/Gear.png" alt="Setting logo" />
         <span>Settings</span>
       </div>
@@ -76,7 +76,8 @@
           </a>
         </li>
         <li class="nav-list">
-          <a class="nav-link" href=""><img class="icon" class="icon" src="/navImg/Bell.png" alt="Notification logo" />
+          <a class="nav-link" href="" routerLink="/notification"><img class="icon" class="icon" src="/navImg/Bell.png"
+              alt="Notification logo" />
             <span>Notifications</span>
           </a>
         </li>
@@ -87,10 +88,17 @@
           </a>
           <ul *ngIf="isDropdownOpen" class="mobile-dropdown ">
             <li>
-              <a class="dropdown-item" href="">
-                <img src="/man.png" alt="profileImg" class="img-fluid pro-image" />
-                <h3>Siddu Admin</h3>
-              </a>
+              <div class="m-dropdown">
+                <div class="pro-initial">S</div>
+                <div class="pro-detail">
+                  <div class="name">Siddhu Admin</div>
+                  <div class="detail">
+                    <span>View</span>
+                    <span class="horizontalIcon">|</span>
+                    <span>Edit</span>
+                  </div>
+                </div>
+              </div>
             </li>
             <hr>
             <li>
@@ -113,12 +121,14 @@
         <ul class="dropdown-menu">
           <li>
             <a class="dropdown-item" href="#">
-              <span class="material-symbols-outlined filledIcon"> business_center </span>
+              <span class="material-symbols-outlined filledIcon" style="font-variation-settings: 'FILL' 1;">
+                business_center </span>
               <span>Job Posting</span></a>
           </li>
           <li style="cursor: pointer;">
             <a class="dropdown-item" (click)="openModal()">
-              <span class="material-symbols-outlined filledIcon"> person </span>
+              <span class="material-symbols-outlined filledIcon" style="font-variation-settings: 'FILL' 1;"> person
+              </span>
               <span>Employee</span></a>
           </li>
           <li>
@@ -134,7 +144,8 @@
         </a>
       </li>
       <li>
-        <a class="nav-link" href=""><img class="icon" src="/navImg/Bell.png" alt="Notification logo" />
+        <a class="nav-link" href="" routerLink="/notification"><img class="icon" src="/navImg/Bell.png"
+            alt="Notification logo" />
         </a>
       </li>
       <li>
@@ -152,7 +163,7 @@
           <li>
             <a class="dropdown-item logout" href="">
               <span>Sign Out</span>
-              <span class="material-symbols-outlined logoutIcon"> logout </span>
+              <span class="material-symbols-outlined logoutIcon" (click)="logOut()"> logout </span>
 
             </a>
           </li>

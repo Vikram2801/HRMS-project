@@ -1,0 +1,369 @@
+<div class="loading-div" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+</div>
+<div class="modal fade" id="employeeModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-fullscreen">
+        <div class="modal-content">
+            <div class="modal-header">
+                <div class="user-profile">
+                    <div class="d-flex gap-2">
+                        <div class="image">
+                            <div *ngIf="employeeDetails.employeePhoto">
+                                <img [src]="employeeDetails?.employeePhoto" alt="profile Pic" class="img-fluid" />
+                            </div>
+                            <div *ngIf="!employeeDetails.employeePhoto">
+                                <div class="initial-image">
+                                    <span>{{ employeeDetails?.firstName?.charAt(0) }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <h6>
+                                {{ employeeDetails.firstName | titlecase }}
+                                {{ employeeDetails.lastName | titlecase }} [{{
+                                employeeDetails.employeeId
+                                }}]
+                            </h6>
+                            <p class="para">
+                                Created at {{ employeeDetails.createdAt | date : "ss" }} seconds
+                                ago
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="content">
+                    <div class="container-fluid p-3">
+                        <div class="row gy-4">
+                            <div class="col-12 col-md-12 col-lg-3" *ngIf="employeeDetails">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h5 class="card-title">
+                                            {{ employeeDetails.firstName| titlecase }}
+                                            {{ employeeDetails.lastName| titlecase }}
+                                        </h5>
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>Employee ID</strong></span>
+                                            <div>{{ employeeDetails.employeeId }}</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>Company Email</strong></span>
+                                            <div>{{ employeeDetails.companyEmail }}</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>Employee Status</strong></span>
+                                            <div>{{ employeeDetails.employeeStatus }}</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>Employee Type</strong></span>
+                                            <div>{{ employeeDetails.employeeType }}</div>
+                                        </div>
+                                        <div class="d-flex justify-content-between">
+                                            <span><strong>Date Of Joining</strong></span>
+                                            <div>
+                                                {{
+                                                employeeDetails.dateOfJoining | date:"MM/dd/yyyy"
+                                                }}
+                                            </div>
+                                        </div>
+                                        <div class="mt-3">
+                                            <span><strong>Department</strong></span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-select [(ngModel)]="employeeDetails.department">
+                                                    <mat-option value="" disabled>Select </mat-option>
+                                                    <mat-option *ngFor="let dept of department" [value]="dept">{{ dept
+                                                        }}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                        <div class="mt-3">
+                                            <span><strong>Designation</strong></span>
+                                        </div>
+                                        <div class="mt-2">
+                                            <mat-form-field appearance="outline" class="w-100">
+                                                <mat-select placeholder="Select Designation"
+                                                    [(ngModel)]="employeeDetails.role">
+                                                    <mat-option value="Select Designation">Select
+                                                        Designation</mat-option>
+                                                    <mat-option *ngFor="let desig of designation" [value]="desig">{{
+                                                        desig }}</mat-option>
+                                                </mat-select>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-6 col-xl-6 col-xxl-6">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <mat-tab-group>
+                                            <mat-tab label="Personal Details">
+                                                <div class="scroll-container">
+                                                    <div class="row">
+                                                        <div
+                                                            class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6 mt-4">
+                                                            <div class="internal-card">
+                                                                <div class="head">
+                                                                    <span class="material-symbols-outlined"
+                                                                        style="font-variation-settings: 'FILL' 1">person</span>
+                                                                    <span>Personal Details</span>
+                                                                </div>
+                                                                <div class="inline-content">
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Personal Email Id</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.personalEmailId
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Personal Phone
+                                                                                Number</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.personalPhoneNumber
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Gender</strong></span>
+                                                                        <span>{{ employeeDetails.gender }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Date Of Birth</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.dob | date : "MM/dd/yyyy"
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Blood Group</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.bloodGroup
+                                                                            }}</span>
+                                                                    </div>
+
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Marital Status</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.maritalStatus
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>PAN Number</strong></span>
+                                                                        <span>{{ employeeDetails.panNumber }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>UAN Number</strong></span>
+                                                                        <span>{{ employeeDetails.uanNumber }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div
+                                                            class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6 mt-4">
+                                                            <div class="internal-card">
+                                                                <div class="head">
+                                                                    <span class="material-symbols-outlined"
+                                                                        style="font-variation-settings: 'FILL' 1">phone_callback</span>
+                                                                    <span>Emergency Contact Details</span>
+                                                                </div>
+                                                                <div class="inline-content">
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Contact Person</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.emergencyContactPerson
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Relation</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.relationBy
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Emergency Contact
+                                                                                Person</strong></span>
+                                                                        <span>{{
+                                                                            employeeDetails.emergencyPhoneNumber
+                                                                            }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="internal-card ddd-flex flex-column mt-4">
+                                                                <div class="head">
+                                                                    <span class="material-symbols-outlined"
+                                                                        style="font-variation-settings: 'FILL' 1">explore</span>
+                                                                    <span>Address Information</span>
+                                                                </div>
+                                                                <div class="inline-content">
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Country</strong></span>
+                                                                        <span>{{ employeeDetails.country }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>State/province</strong></span>
+                                                                        <span>{{ employeeDetails.state }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>City</strong></span>
+                                                                        <span>{{ employeeDetails.city }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Street</strong></span>
+                                                                        <span>{{ employeeDetails.street }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Zip/Postal</strong></span>
+                                                                        <span>{{ employeeDetails.zip }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </mat-tab>
+                                            <mat-tab label="Professional Details">
+
+                                                <div>
+                                                    <div class="row mt-4">
+                                                        <div class="d-flex align-items-center gap-2 mb-3 pl-2">
+                                                            <span class="material-symbols-outlined"
+                                                                style="font-variation-settings: 'FILL' 1">person_add</span>
+                                                            <span>Previous Experience</span>
+                                                        </div>
+                                                        <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6"
+                                                            *ngFor="let experience of employeeDetails.previousExperience">
+
+                                                            <div class="internal-card">
+                                                                <div class="inline-content">
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Organization</strong></span>
+                                                                        <span>{{
+                                                                            experience.organization
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Designation</strong></span>
+                                                                        <span>{{
+                                                                            experience.designation
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Experience in
+                                                                                Years</strong></span>
+                                                                        <span>{{
+                                                                            experience.experienceYears
+                                                                            }}</span>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </mat-tab>
+                                            <mat-tab label="Document Categories">
+                                                <div>
+                                                    <div class="row mt-4">
+                                                        <div class="d-flex align-items-center gap-2 mb-3 pl-2">
+                                                            <span class="material-symbols-outlined"
+                                                                style="font-variation-settings: 'FILL' 1">description</span>
+                                                            <span>Document Categories</span>
+
+                                                        </div>
+                                                        <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6"
+                                                            *ngFor="let document of employeeDetails.documents">
+                                                            <div class="internal-card">
+                                                                <div class="inline-content">
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Document Type</strong></span>
+                                                                        <span class="text-end">{{ document.documentType
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Document Name</strong></span>
+                                                                        <span class="text-end">{{ document.documentName
+                                                                            }}</span>
+                                                                    </div>
+                                                                    <div class="inline-detail">
+                                                                        <span><strong>Document File</strong></span>
+                                                                        <a href="{{ document.documentFile }}"
+                                                                            target="_blank" class="fileLink">{{
+                                                                            document.documentFile }}</a>
+                                                                    </div>
+
+                                                                </div>
+                                                            </div>
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </mat-tab>
+                                            <mat-tab label="Bank Details">
+                                                <div class="row mt-4">
+
+                                                    <div class="col-12 col-md-12 col-lg-12 col-xl-12 col-xxl-6">
+                                                        <div class="internal-card">
+                                                            <div class="head">
+                                                                <span class="material-symbols-outlined"
+                                                                    style="font-variation-settings: 'FILL' 1">account_balance</span>
+                                                                <span>Bank Details</span>
+                                                            </div>
+                                                            <div class="inline-content">
+                                                                <div class="inline-detail">
+                                                                    <span><strong>Bank Name</strong></span>
+                                                                    <span>{{ employeeDetails.bankName }}</span>
+                                                                </div>
+
+                                                                <div class="inline-detail">
+                                                                    <span><strong>Bank Code</strong></span>
+                                                                    <span>{{ employeeDetails.bankCode }}</span>
+                                                                </div>
+                                                                <div class="inline-detail">
+                                                                    <span><strong> Bank Account Number</strong></span>
+                                                                    <span>{{ employeeDetails.bankAccountNumber }}</span>
+                                                                </div>
+                                                                <div class="inline-detail">
+                                                                    <span><strong>PF A/C Number</strong></span>
+                                                                    <span>{{ employeeDetails.pfAccountNumber }}</span>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </mat-tab>
+                                            <mat-tab label="ID Card"> coming soon... </mat-tab>
+                                        </mat-tab-group>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-12 col-lg-3">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h6 class="card-title">Activity</h6>
+                                        <div class="d-flex align-items-center gap-2">
+                                            <span class="material-symbols-outlined addIcon">add</span>
+                                            <div>
+                                                <span>Inserted On Employee</span>
+                                                <p class="m-0">by Vedantvyas</p>
+                                                <p class="m-0">
+                                                    {{ employeeDetails.insertedOn | date : "ss" }} Minutes
+                                                    ago
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
