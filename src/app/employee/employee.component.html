@@ -132,19 +132,19 @@
                                 <div class="col-12 col-md-6">
                                     <mat-form-field appearance="outline" class="example-full-width" [ngClass]="{
                       'error-visible':
-                        employeeForm.controls['bloodGroups'].hasError(
+                        employeeForm.controls['bloodGroup'].hasError(
                           'required'
                         ) && submitted
                     }">
                                         <mat-label>Blood Groups</mat-label>
                                         <mat-select name="bloodGroup" placeholder="select Blood Groups"
-                                            formControlName="bloodGroups">
+                                            formControlName="bloodGroup">
                                             <mat-option disabled>select</mat-option>
                                             <mat-option *ngFor="let blood of bloodGroups" [value]="blood">{{ blood
                                                 }}</mat-option>
                                         </mat-select>
                                         <mat-error class="errorMessage" *ngIf="
-                        employeeForm.controls['bloodGroups']?.hasError(
+                        employeeForm.controls['bloodGroup']?.hasError(
                           'required'
                         ) && submitted
                       ">*Blood Group is Required
@@ -166,7 +166,7 @@
                       ">*Personal Email is Required
                                         </mat-error>
                                         <mat-error class="errorMessage" *ngIf="
-                        employeeForm.controls['personalEmailId']?.hasError('pattern') &&
+                        employeeForm.controls['personalEmailId']?.hasError('email') &&
                         submitted
                       ">*Email is Invalid
                                         </mat-error>
@@ -183,7 +183,7 @@
                                         <input matInput placeholder=" Enter Personal Number"
                                             formControlName="personalPhoneNumber"
                                             onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57"
-                                            minlength="10" />
+                                            maxlength="10" />
                                         <mat-error class="errorMessage" *ngIf="
                         employeeForm.controls['personalPhoneNumber']?.hasError(
                           'required'
@@ -311,7 +311,7 @@
                           'required'
                         ) && submitted
                     }">
-                                        <mat-label> Company Email *</mat-label>
+                                        <mat-label> Company Email </mat-label>
                                         <input matInput placeholder=" Enter Company Email"
                                             formControlName="companyEmail" />
                                         <mat-error class="errorMessage" *ngIf="
@@ -329,6 +329,20 @@
                                     </mat-form-field>
                                 </div>
 
+
+                                <div class="col-12 col-md-6">
+                                    <mat-form-field appearance="outline" class="example-full-width">
+                                        <mat-label>Department</mat-label>
+                                        <mat-select placeholder="select Department" formControlName="department">
+                                            <mat-option disabled>select</mat-option>
+                                            <mat-option value="Information Technology">Accountant</mat-option>
+                                            <mat-option value="Human Resource">Human Resource</mat-option>
+                                            <mat-option value="Finance">Finance</mat-option>
+                                            <mat-option value="Management">Management</mat-option>
+
+                                        </mat-select>
+                                    </mat-form-field>
+                                </div>
                                 <div class="col-12 col-md-6">
                                     <mat-form-field appearance="outline" class="example-full-width" [ngClass]="{
                       'error-visible':
@@ -336,13 +350,16 @@
                           'required'
                         ) && submitted
                     }">
-                                        <mat-label>Designation *</mat-label>
+                                        <mat-label>Designation </mat-label>
                                         <mat-select placeholder="select Designation" formControlName="designation">
                                             <mat-option disabled>select</mat-option>
-                                            <mat-option value="Information Technology">Accountant</mat-option>
-                                            <mat-option value="Human Resource">Human Resource</mat-option>
-                                            <mat-option value="Finance">Finance</mat-option>
-                                            <mat-option value="Management">Management</mat-option>
+                                            <mat-option value="Accountant">Accountant</mat-option>
+                                            <mat-option value="Analyst">Analyst</mat-option>
+                                            <mat-option value="Developer">Developer</mat-option>
+                                            <mat-option value="HR">HR</mat-option>
+                                            <mat-option value="Manager">Manager</mat-option>
+                                            <mat-option value="Trainee">Trainee</mat-option>
+
                                         </mat-select>
                                         <mat-error class="errorMessage" *ngIf="
                         employeeForm.controls['designation']?.hasError(
@@ -350,20 +367,6 @@
                         ) && submitted
                       ">*Designation is Required
                                         </mat-error>
-                                    </mat-form-field>
-                                </div>
-                                <div class="col-12 col-md-6">
-                                    <mat-form-field appearance="outline" class="example-full-width">
-                                        <mat-label>Department</mat-label>
-                                        <mat-select placeholder="select Department" formControlName="department">
-                                            <mat-option disabled>select</mat-option>
-                                            <mat-option value="Accountant">Accountant</mat-option>
-                                            <mat-option value="Analyst">Analyst</mat-option>
-                                            <mat-option value="Devloper">Devloper</mat-option>
-                                            <mat-option value="HR">HR</mat-option>
-                                            <mat-option value="Manager">Manager</mat-option>
-                                            <mat-option value="Trainee">Trainee</mat-option>
-                                        </mat-select>
                                     </mat-form-field>
                                 </div>
                                 <div class="col-12 col-md-6">

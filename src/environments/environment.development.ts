@@ -3,7 +3,8 @@ export const environment = {
     baseUrl: 'https://onboard.tryoncourse.com/api/'
 };
 export const hrms = {
-    login:'user/login',
+    login: 'user/login',
     getEmployees: 'employee/get-all-employees',
     getEmployeeById: 'employee/get-employee',
+    addEmployee: 'employee/add-employee'
 }

@@ -13,6 +13,7 @@ import { CommonModule } from '@angular/common';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthService } from '../services/auth.service';
 import { Router } from '@angular/router';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-login',
@@ -24,6 +25,7 @@ import { Router } from '@angular/router';
     FormsModule,
     CommonModule,
     MatIconModule,
+    MatProgressSpinnerModule
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
@@ -32,6 +34,7 @@ import { Router } from '@angular/router';
 export class LoginComponent implements OnInit {
   loginForm!: FormGroup;
   submitted: boolean = false;
+  isLoading: boolean = false;
   hide: boolean = true;
   constructor(private auth: AuthService, private router: Router) { }
   ngOnInit(): void {
@@ -49,6 +52,7 @@ export class LoginComponent implements OnInit {
 
   }
   onLog() {
+    this.isLoading = true;
     if (this.loginForm.invalid) {
       this.submitted = true;
       this.loginForm.markAllAsTouched();
@@ -57,6 +61,7 @@ export class LoginComponent implements OnInit {
       this.auth.login(this.loginForm.value).subscribe({
         next: (res: any) => {
           if (res?.token) {
+            this.isLoading = false;
             this.auth.setToken(res.token);
             this.auth.setUser(res.user);
             console.log('User data:', res.user);

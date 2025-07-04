@@ -31,6 +31,8 @@ import {
 } from 'ngx-image-cropper';
 import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { CommonService } from '../services/common.service';
+import { AuthService } from '../services/auth.service';
 
 declare var bootstrap: any;
 
@@ -69,8 +71,15 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   currentStep: number = 1;
   uploadFileName: string | null = '';
   savedImage: any = '';
+  employees: any[] = [];
+  totalEmployees: Number = 0
+  totalPages: number = 0;
+  limit: number = 10;
+  currentPage: number = 1;
   isLoading: boolean = false;
   isBrowser: boolean;
+  user: any;
+  employeeId: any
   employeeStatuses: string[] = [
     'Active',
     'On Notice Period',
@@ -229,7 +238,8 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   @ViewChild(ImageCropperComponent)
   imageCropper!: ImageCropperComponent;
   constructor(
-    private sanitizer: DomSanitizer,
+    private auth: AuthService,
+    private common: CommonService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
@@ -239,6 +249,15 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   exampleModal: any;
 
   ngAfterViewInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      const modalEl = document.getElementById('exampleModal');
+      if (modalEl) {
+        this.exampleModal = new bootstrap.Modal(modalEl);
+        this.exampleModal.hide();
+      } else {
+        console.error('Photo modal element not found');
+      }
+    }
 
     if (isPlatformBrowser(this.platformId)) {
       const modalEl = document.getElementById('photoModal');
@@ -252,16 +271,19 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.user = this.auth.getUser()
+    this.employeeId = this.user.organizationId || '';
+
     this.employeeForm = new FormGroup({
       firstName: new FormControl('', Validators.required),
       lastName: new FormControl('', Validators.required),
       employeePhoto: new FormControl(''),
       gender: new FormControl('', Validators.required),
       dob: new FormControl('', Validators.required),
-      bloodGroups: new FormControl('', Validators.required),
+      bloodGroup: new FormControl('', Validators.required),
       personalEmailId: new FormControl('', [
         Validators.required,
-        Validators.pattern(/^[\w+]+([\.-]?\w+)\+?\d@[\w-]+(\.\w+){1,2}$/i),
+        Validators.email,
       ]),
       personalPhoneNumber: new FormControl('', Validators.required),
       maritalStatus: new FormControl(''),
@@ -355,9 +377,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     }
   }
   close() {
-    const modalEl = document.getElementById('employeeModal');
-    const modalInstance = bootstrap.Modal.getInstance(modalEl);
-    modalInstance?.hide();
+    if (this.exampleModal) {
+      this.isModalOpen = false;
+      this.exampleModal.hide();
+    }
   }
 
   onFileSelected(event: Event): void {
@@ -385,7 +408,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   saveImage() {
     this.savedImage = this.croppedImage;
     this.employeeForm.patchValue({ employeePhoto: this.savedImage });
-    console.log('saveimage', this.savedImage);
     this.cdr.detectChanges();
     this.closeModal();
   }
@@ -424,6 +446,22 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       reader.readAsDataURL(blob);
     });
   }
+  base64ToBlob(base64: string, contentType: string = 'image/png'): Blob {
+    const byteCharacters = atob(base64.split(',')[1]);
+    const byteArrays = [];
+
+    for (let i = 0; i < byteCharacters.length; i += 512) {
+      const slice = byteCharacters.slice(i, i + 512);
+      const byteNumbers = new Array(slice.length);
+      for (let j = 0; j < slice.length; j++) {
+        byteNumbers[j] = slice.charCodeAt(j);
+      }
+      const byteArray = new Uint8Array(byteNumbers);
+      byteArrays.push(byteArray);
+    }
+
+    return new Blob(byteArrays, { type: contentType });
+  }
 
   removeFile(index: number): void {
     this.documents.at(index).patchValue({
@@ -461,11 +499,109 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   onsubmit() {
     this.isLoading = true;
     if (this.employeeForm.invalid) {
-      this.submitted = true;
-      this.isLoading = false;
-      this.employeeForm.markAllAsTouched();
-      this.currentStep = 1;
-      return;
+      if (this.employeeForm.controls['firstName'].errors || this.employeeForm.controls['dob'].errors || this.employeeForm.controls['bloodGroup'].errors || this.employeeForm.controls['personalEmailId'].errors || this.employeeForm.controls['personalPhoneNumber'].errors) {
+        this.submitted = true;
+        this.currentStep = 1;
+        this.isLoading = false;
+        this.employeeForm.markAllAsTouched();
+        return;
+      } if (this.employeeForm.controls['companyEmail'].errors || this.employeeForm.controls['designation'].errors || this.employeeForm.controls['employeeStatus'].errors) {
+        this.submitted = true;
+        this.currentStep = 2;
+        this.isLoading = false;
+        this.employeeForm.markAllAsTouched();
+        return;
+      }
+    } else {
+      const formData = new FormData();
+      if (this.savedImage) {
+        const imageBlob = this.base64ToBlob(this.savedImage);
+        formData.append('employeePhoto', imageBlob, 'employee.png');
+      }
+      formData.append('firstName', this.employeeForm.value.firstName);
+      formData.append('lastName', this.employeeForm.value.lastName);
+      formData.append('employeePhoto', this.savedImage);
+      formData.append('gender', this.employeeForm.value.gender);
+      formData.append('dob', this.employeeForm.value.dob);
+      formData.append('bloodGroup', this.employeeForm.value.bloodGroup);
+      formData.append('personalEmailId', this.employeeForm.value.personalEmailId);
+      formData.append('personalPhoneNumber', this.employeeForm.value.personalPhoneNumber);
+      formData.append('maritalStatus', this.employeeForm.value.maritalStatus);
+      formData.append('panNumber', this.employeeForm.value.panNumber);
+      formData.append('uanNumber', this.employeeForm.value.uanNumber);
+      formData.append('emergencyContactPerson', this.employeeForm.value.emergencyContactPerson);
+      formData.append('relationBy', this.employeeForm.value.relationBy);
+      formData.append('emergencyPhoneNumber', this.employeeForm.value.emergencyPhoneNumber);
+      formData.append('street', this.employeeForm.value.street);
+      formData.append('city', this.employeeForm.value.city);
+      formData.append('country', this.employeeForm.value.country);
+      formData.append('state', this.employeeForm.value.state);
+      formData.append('zip', this.employeeForm.value.zip);
+      formData.append('employeeId', this.employeeForm.value.employeeId);
+      formData.append('companyEmail', this.employeeForm.value.companyEmail);
+      formData.append('role', this.employeeForm.value.designation);
+      formData.append('department', this.employeeForm.value.department);
+      formData.append('reportingTo', this.employeeForm.value.reportingTo);
+      formData.append('employeeStatus', this.employeeForm.value.employeeStatus);
+      formData.append('employeeType', this.employeeForm.value.employeeType);
+      formData.append('workShift', this.employeeForm.value.workShift);
+      formData.append('dateOfJoining', this.employeeForm.value.dateOfJoining);
+      formData.append('bankName', this.employeeForm.value.bankName);
+      formData.append('bankCode', this.employeeForm.value.bankCode);
+      formData.append('bankAccountNumber', this.employeeForm.value.bankAccountNumber);
+      formData.append('pfAccountNumber', this.employeeForm.value.pfAccountNumber);
+      formData.append('previousExperience', JSON.stringify(this.employeeForm.value.previousExperience));
+
+      const metadata: any[] = [];
+      this.documents.controls.forEach((doc, i) => {
+        const file = doc.get('file')?.value;
+        metadata.push({
+          documentName: doc.get('documentName')?.value || '',
+          documenttype: doc.get('documenttype')?.value || '',
+          fileKey: file ? `file${i}` : null
+        });
+        if (file) {
+          formData.append(`documentFile`, file, file.name);
+        }
+      });
+
+      formData.append('documents', JSON.stringify(metadata));
+      this.common.addEmployee(formData).subscribe({
+        next: (res: any) => {
+          this.isLoading = false;
+          this.currentStep = 1;
+          this.submitted = false;
+          this.employeeForm.value.clear()
+          this.close()
+          this.getEmployee()
+        },
+        error: (err) => {
+          this.isLoading = false;
+          this.currentStep = 2
+        }
+      })
     }
   }
+  getEmployee() {
+    const query = {
+      page: this.currentPage.toString(),
+      limit: this.limit.toString(),
+      sortOrder: 'desc',
+      sortBy: 'createdAt',
+      keyword: '',
+      role: ''
+
+    };
+    this.common.getEmployees(this.employeeId, query).subscribe({
+      next: (res: any) => {
+        this.employees = res.employees;
+        this.totalEmployees = res.totalEmployees;
+        this.currentPage = res.currentPage;
+      },
+      error: (err) => {
+        console.error('Error fetching employees:', err);
+      }
+    });
+  }
+
 }

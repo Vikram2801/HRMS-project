@@ -1,3 +1,6 @@
+<div class="loading-div" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+</div>
 <div class="container-fluid h-100">
     <div class="row h-100">
         <div class="col-12 col-lg-4 col-xl-4 left-column d-none d-lg-block">
@@ -54,7 +57,7 @@
                         ">* Email is Required
                                             </mat-error>
                                             <mat-error class="errorMessage" *ngIf="
-                          loginForm.controls['email']?.hasError('pattern') &&
+                          loginForm.controls['email']?.hasError('email') &&
                           submitted
                         ">*Email is Invalid
                                             </mat-error>
