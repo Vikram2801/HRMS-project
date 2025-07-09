@@ -173,5 +173,5 @@
 
   </div>
 </div>
-<app-employee *ngIf="isModal"></app-employee>
+<app-employee *ngIf="isModal" (submitSuccess)="onEmployeeAdded()"></app-employee>
 <router-outlet></router-outlet>

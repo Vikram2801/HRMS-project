@@ -54,3 +54,14 @@ label {
   justify-content: center;
   z-index: 2000;
 }
+#exampleModal {
+  background-color: #00000085;
+  z-index: 1050;
+}
+#photoModal {
+  background-color: #00000085;
+  z-index: 1060;
+}
+.mat-dialog-content {
+  font-size: 18px !important;
+}

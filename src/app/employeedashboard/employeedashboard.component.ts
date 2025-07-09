@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonService } from '../services/common.service';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CommonModule } from '@angular/common';
@@ -6,6 +6,9 @@ import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
 import { EmployeedetailsComponent } from '../employeedetails/employeedetails.component';
 import { AuthService } from '../services/auth.service';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { DeleteComponent } from '../delete/delete.component';
+import { MatDialog } from '@angular/material/dialog';
+import { error } from 'console';
 declare var bootstrap: any;
 @Component({
   selector: 'app-employeedashboard',
@@ -26,18 +29,15 @@ export class EmployeedashboardComponent implements OnInit {
   user: any;
   userId: string = '';
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  dialog = inject(MatDialog);
 
   ngOnInit() {
     this.isLoading = true;
     this.user = this.auth.getUser();
     this.employeeId = this.user.organizationId || '';
-
     if (this.employeeId) {
       this.getEmployee();
-      // this.isLoading = false
-
     }
-
   }
   getEmployee() {
     const query = {
@@ -54,6 +54,7 @@ export class EmployeedashboardComponent implements OnInit {
     };
     this.commonService.getEmployees(this.employeeId, query).subscribe({
       next: (res: any) => {
+
         this.isLoading = false
         this.employees = res.employees;
         this.totalEmployees = res.totalEmployees;
@@ -65,6 +66,25 @@ export class EmployeedashboardComponent implements OnInit {
       }
     });
   }
+  deleteEmployee(employeeId: string) {
+    const matdialog = this.dialog.open(DeleteComponent, {
+      panelClass: 'create-dialog-container',
+    })
+    matdialog.afterClosed().subscribe((result: boolean) => {
+      if (result) {
+        this.commonService.deleteEmployee(this.employeeId, employeeId).subscribe({
+          next: (res: any) => {
+            if (res.success) {
+              console.log('deleted successfully', res);
+              this.getEmployee()
+            }
+          }
+        })
+      }
+    })
+
+
+  }
   OnPageChange(event: any) {
     this.currentPage = event.pageIndex + 1;
     this.limit = event.pageSize;
@@ -73,14 +93,12 @@ export class EmployeedashboardComponent implements OnInit {
   openModal(employee: any) {
     this.isLoading = true
     this.isModal = true;
-    this.userId = employee._id; // pass selected employeeId to child
+    this.userId = employee._id;
     setTimeout(() => {
-      this.isLoading = false
       const modalEl = document.getElementById('employeeModal');
-
       if (modalEl) {
         const modal = new bootstrap.Modal(modalEl);
-
+        this.isLoading = false
         modal.show();
 
         modalEl.addEventListener('hidden.bs.modal', () => {

@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject } from '@angular/core';
+import { Component, inject, ViewChild } from '@angular/core';
 import {
   Router,
   RouterLink,
@@ -29,6 +29,8 @@ export class SidenavComponent {
   isAddNewOpen: boolean = false;
   router = inject(Router);
   authService = inject(AuthService);
+  exampleModalInstance: any = null;
+  @ViewChild(EmployeeComponent) employeeComponent!: EmployeeComponent;
 
   toggleAddNew() {
     this.isAddNewOpen = !this.isAddNewOpen;
@@ -43,19 +45,25 @@ export class SidenavComponent {
 
   openModal() {
     this.isModal = true;
+
     setTimeout(() => {
       const modalEl = document.getElementById('exampleModal');
       if (modalEl) {
-        const modal = new bootstrap.Modal(modalEl);
-        modal.show();
-        modalEl.addEventListener('hidden.bs.modal', () => {
-          this.isModal = false;
-        },
-          { once: true }
-        );
+        this.exampleModalInstance = new bootstrap.Modal(modalEl, {
+          backdrop: 'static',
+          keyboard: false
+        });
+        this.exampleModalInstance.show();
       }
     }, 0);
   }
+
+  onEmployeeAdded() {
+    if (this.exampleModalInstance) {
+      this.exampleModalInstance.hide();
+    }
+  }
+
 
   openDropdown() {
     this.isDropdownOpen = !this.isDropdownOpen;

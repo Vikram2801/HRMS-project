@@ -7,7 +7,7 @@
         <div class="modal-content">
             <div class="modal-header addEmployee">
                 <h5 class="modal-title" id="exampleModalLabel">Add Employee</h5>
-                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close" (click)="close()">
+                <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
                     <span class="material-symbols-outlined close-icon"> close </span>
                 </button>
             </div>
@@ -73,11 +73,12 @@
                                             <input type="file" id="fileInput" (change)="onFileSelected($event)"
                                                 style="display: none" />
 
-                                            <span class="material-symbols-outlined filledIcon">photo_camera</span>
+                                            <span class="material-symbols-outlined filledIcon"
+                                                style="font-variation-settings: 'FILL' 1;">photo_camera</span>
                                         </div>
                                         <div *ngIf="savedImage" class="cropDiv">
                                             <img [src]="savedImage" alt="Cropped Image"
-                                                style="height: 100px; width: auto" />
+                                                style="max-width: 122px; max-height: 122px" />
                                             <span class="material-symbols-outlined imageCancel"
                                                 (click)="cancelImage()">cancel</span>
                                         </div>
@@ -241,7 +242,8 @@
                                     <mat-form-field class="example-full-width" appearance="outline">
                                         <mat-label>Emergency Phone Number</mat-label>
                                         <input matInput placeholder=" Enter Emergency Phone Number"
-                                            formControlName="emergencyPhoneNumber" />
+                                            formControlName="emergencyPhoneNumber"
+                                            onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
                                     </mat-form-field>
                                 </div>
                             </div>
@@ -505,13 +507,15 @@
                                                     <mat-form-field appearance="outline" class="custom-left">
                                                         <mat-label>Experience in Years</mat-label>
                                                         <input matInput formControlName="years"
-                                                            placeholder="Enter Years" />
+                                                            placeholder="Enter Years"
+                                                            onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
                                                     </mat-form-field>
 
                                                     <mat-form-field appearance="outline" class="custom-right">
                                                         <mat-label>Experience in Months</mat-label>
                                                         <input matInput formControlName="months"
-                                                            placeholder="Enter Months" />
+                                                            placeholder="Enter Months"
+                                                            onkeypress="return (event.charCode == 8 || event.charCode == 0) ? null : event.charCode >= 48 && event.charCode <= 57" />
                                                     </mat-form-field>
                                                 </div>
                                             </div>
@@ -572,12 +576,13 @@
                                                             <p>Drop file here to upload</p>
                                                         </ng-template>
                                                     </label>
-                                                    <span *ngIf="documents.at(i).get('uploadFileName')?.value"
-                                                        class="material-symbols-outlined cancelIcon"
-                                                        (click)="removeFile(i); $event.stopPropagation()">
-                                                        cancel
-                                                    </span>
+
                                                 </div>
+                                                <span *ngIf="documents.at(i).get('uploadFileName')?.value"
+                                                    class="material-symbols-outlined cancelIcon"
+                                                    (click)="removeFile(i); $event.stopPropagation()">
+                                                    cancel
+                                                </span>
                                                 <div class="txt-upload">
                                                     <label>Upload Files</label>
                                                 </div>
@@ -615,14 +620,14 @@
             </div>
             <div class="modal-body body">
                 <image-cropper *ngIf="isBrowser" [output]="'base64'" [resizeToWidth]="256"
-                    [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="4 / 3"
+                    [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
                     format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)"
                     (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
                 </image-cropper>
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer photo-Footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                    Close
+                    Cancel
                 </button>
                 <button type="button" class="btn btn-danger" (click)="saveImage()">
                     Done

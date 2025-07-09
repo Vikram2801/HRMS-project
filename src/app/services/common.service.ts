@@ -19,5 +19,8 @@ export class CommonService {
     return this.http.post(environment.baseUrl + hrms.addEmployee, formData)
 
   }
+  deleteEmployee(id: string, empId: string = '') {
+    return this.http.delete(environment.baseUrl + hrms.deleteEmployee + '/' + id + '/' + empId);
+  }
 
 }

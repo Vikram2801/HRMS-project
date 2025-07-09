@@ -3,8 +3,10 @@ import {
   ChangeDetectionStrategy,
   ChangeDetectorRef,
   Component,
+  EventEmitter,
   Inject,
   OnInit,
+  Output,
   PLATFORM_ID,
   ViewChild,
   ViewEncapsulation,
@@ -33,6 +35,7 @@ import { DomSanitizer, SafeUrl } from '@angular/platform-browser';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { CommonService } from '../services/common.service';
 import { AuthService } from '../services/auth.service';
+import { ToastrService } from 'ngx-toastr';
 
 declare var bootstrap: any;
 
@@ -237,8 +240,10 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   ];
   @ViewChild(ImageCropperComponent)
   imageCropper!: ImageCropperComponent;
+  @Output() submitSuccess = new EventEmitter();
   constructor(
     private auth: AuthService,
+    private toastr: ToastrService,
     private common: CommonService,
     private cdr: ChangeDetectorRef,
     @Inject(PLATFORM_ID) private platformId: Object
@@ -249,15 +254,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
   exampleModal: any;
 
   ngAfterViewInit() {
-    if (isPlatformBrowser(this.platformId)) {
-      const modalEl = document.getElementById('exampleModal');
-      if (modalEl) {
-        this.exampleModal = new bootstrap.Modal(modalEl);
-        this.exampleModal.hide();
-      } else {
-        console.error('Photo modal element not found');
-      }
-    }
 
     if (isPlatformBrowser(this.platformId)) {
       const modalEl = document.getElementById('photoModal');
@@ -376,12 +372,6 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
       this.cdr.detectChanges();
     }
   }
-  close() {
-    if (this.exampleModal) {
-      this.isModalOpen = false;
-      this.exampleModal.hide();
-    }
-  }
 
   onFileSelected(event: Event): void {
     if (!this.isBrowser) return;
@@ -497,6 +487,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     if (this.currentStep < 3) this.currentStep++;
   }
   onsubmit() {
+
     this.isLoading = true;
     if (this.employeeForm.invalid) {
       if (this.employeeForm.controls['firstName'].errors || this.employeeForm.controls['dob'].errors || this.employeeForm.controls['bloodGroup'].errors || this.employeeForm.controls['personalEmailId'].errors || this.employeeForm.controls['personalPhoneNumber'].errors) {
@@ -567,13 +558,19 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
 
       formData.append('documents', JSON.stringify(metadata));
       this.common.addEmployee(formData).subscribe({
+
         next: (res: any) => {
-          this.isLoading = false;
-          this.currentStep = 1;
-          this.submitted = false;
-          this.employeeForm.value.clear()
-          this.close()
-          this.getEmployee()
+          if (res.success) {
+            this.currentPage = 1;
+            this.isLoading = false;
+            this.submitted = false;
+            this.getEmployee()
+            this.employeeForm.reset();
+            this.savedImage = '';
+            this.submitSuccess.emit();
+            this.toastr.success(' Add Employee Successful', 'success', { positionClass: 'toast-top-right' })
+          }
+
         },
         error: (err) => {
           this.isLoading = false;
@@ -594,6 +591,7 @@ export class EmployeeComponent implements OnInit, AfterViewInit {
     };
     this.common.getEmployees(this.employeeId, query).subscribe({
       next: (res: any) => {
+        this.isLoading = false;
         this.employees = res.employees;
         this.totalEmployees = res.totalEmployees;
         this.currentPage = res.currentPage;
