@@ -144,15 +144,16 @@
     }
 
     .img-fluid {
-      height: 57px;
-      width: 57px;
+      height: 87px;
+      width: 87px;
       border-radius: 50%;
     }
     p {
-      font-family: "poppins-regular", "sans-serif";
-      font-size: 18px;
-      margin-top: 10px;
-      font-weight: 500;
+      margin-top: 14px;
+      font-size: 24px;
+      color: #fff;
+      font-weight: 700;
+      font-family: "poppins-regular" !important;
       @include mobile() {
         font-size: 13px;
       }

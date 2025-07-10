@@ -1,12 +1,95 @@
 @use "../../variable.scss" as *;
-.container {
+.container-fluid {
   margin-left: 274px;
   width: calc(100% - 274px);
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   top: 100px;
 
   @include mobile() {
     margin-left: 79px;
     width: calc(100% - 79px);
+  }
+  .section {
+    padding: 20px;
+    h3 {
+      color: #000;
+      width: 100%;
+      font-family: "poppins-regular";
+      padding-top: 9px;
+      font-size: 34px;
+      font-weight: 500;
+    }
+    .sub-title {
+      font-size: 22px;
+      padding-top: 10px;
+      font-weight: 400;
+      color: #444;
+      font-family: "poppins-regular";
+      margin: 0;
+    }
+    .cards {
+      display: flex;
+      font-family: "poppins-regular";
+      align-items: center;
+      background-color: #fff;
+      border-radius: 16px;
+      padding: 8px 12px;
+      margin: 30px 0;
+      border: 1px solid #e0e0e0;
+      textarea {
+        resize: none;
+        border: none;
+        outline: none;
+        padding: 10px 20px;
+        font-size: 14px;
+        background-color: transparent;
+      }
+      .btn-send {
+        background: linear-gradient(135deg, #f0f7ff, #e6f7f7);
+        border-radius: 6px;
+        padding: 10px;
+        cursor: pointer;
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        border: none;
+      }
+    }
+    .notification {
+      background-color: #fff;
+      padding: 20px;
+      overflow-y: auto;
+      height: calc(100vh - 380px) !important;
+      scrollbar-width: thin;
+      border-radius: 9.21px;
+      .date {
+        color: #121212;
+        font-size: 18px;
+        font-weight: 600;
+        font-family: "poppins-regular";
+        margin-top: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 0 15px;
+      }
+      .title {
+        font-size: 16px;
+        font-family: "poppins-regular";
+        color: #121212;
+        margin-bottom: 20px;
+        padding: 0 15px;
+      }
+      .content {
+        color: #121212;
+        font-size: 14px;
+        font-family: "poppins-regular";
+        line-height: 1.5;
+        margin-bottom: 15px;
+        padding: 0 15px;
+      }
+    }
   }
 }

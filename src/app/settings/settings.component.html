@@ -1,3 +1,142 @@
-<div class="container">
-    <p>settings works!</p>
+<div class="container-fluid">
+    <section>
+        <div class="head">
+            <h3>Settings</h3>
+            <hr>
+        </div>
+        <div class="profile-card">
+            <div class="profile">
+                <div class="title">
+                    <p>Your Profile</p>
+
+                </div>
+                <img *ngIf="!savedImage" [src]="user.employeePhoto" alt="image not found" class="img-fluid">
+                <img *ngIf="savedImage" [src]="savedImage" alt="image not found" class="img-fluid">
+                <div class="custom-input" (click)="triggerFile()">
+                    <input type="file" id="fileInput" (change)="onFileSelect($event)" hidden>
+                    <span class="material-symbols-outlined edit">border_color</span>
+
+                </div>
+
+            </div>
+        </div>
+
+        <div class="form">
+
+            <form [formGroup]="updateForm">
+                <div class="row">
+                    <div class="col-12 col-md-6 col-lg-6 mb-3">
+                        <mat-form-field appearance="outline" class="example-full-width" [ngClass]="{
+                        'error-visible':
+                          updateForm.controls['firstName'].hasError(
+                            'required'
+                          ) && submitted
+                      }">
+                            <mat-label>FirstName</mat-label>
+                            <input matInput placeholder=" Enter FirstName" formControlName="firstName" />
+                            <mat-error class="errorMessage" *ngIf="
+                          updateForm.controls['firstName']?.hasError(
+                            'required'
+                          ) && submitted
+                        ">* FirstName Required
+                            </mat-error>
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 mb-3">
+                        <mat-form-field appearance="outline" class="example-full-width" [ngClass]="{
+                        'error-visible':
+                          updateForm.controls['lastName'].hasError(
+                            'required'
+                          ) && submitted
+                      }">
+                            <mat-label>LastName</mat-label>
+                            <input matInput placeholder=" Enter LastName" formControlName="lastName" />
+                            <mat-error class="errorMessage" *ngIf="
+                          updateForm.controls['lastName']?.hasError(
+                            'required'
+                          ) && submitted
+                        ">* LastName Required
+                            </mat-error>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 mb-3">
+                        <mat-form-field appearance="outline" class="example-full-width" [ngClass]="{
+                        'error-visible':
+                          updateForm.controls['email'].hasError(
+                            'required'
+                          ) && submitted
+                      }">
+                            <mat-label>Email</mat-label>
+                            <input matInput placeholder=" Enter Email" formControlName="email" readonly />
+                            <mat-error class="errorMessage" *ngIf="
+                          updateForm.controls['email']?.hasError(
+                            'required'
+                          ) && submitted
+                        ">* Email Required
+                            </mat-error>
+                            <mat-error class="errorMessage" *ngIf="
+                        updateForm.controls['email']?.hasError('email') &&
+                        submitted
+                      ">*Email is Invalid
+                            </mat-error>
+                        </mat-form-field>
+
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 mb-3">
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Designation</mat-label>
+                            <input matInput placeholder=" Enter Designation" formControlName="designation" readonly />
+                        </mat-form-field>
+
+
+                    </div>
+                    <div class="col-12 col-md-6 col-lg-6 mb-3">
+                        <mat-form-field appearance="outline" class="example-full-width">
+                            <mat-label>Reporting Manager</mat-label>
+                            <mat-select placeholder="Select Reporting Manager" formControlName="reportingTo">
+                                <mat-option disabled>Select</mat-option>
+                                <mat-option value="manager1">Manager 1</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+                    </div>
+                </div>
+
+            </form>
+            <div class="d-flex justify-content-end">
+                <button class="btn btn-primary  " (click)="onSave()">Save</button>
+            </div>
+
+
+
+        </div>
+    </section>
+
+</div>
+<div class="modal fade" id="photoModal" tabindex="-1" aria-labelledby="photoModalLabel" aria-hidden="true">
+    <div class="modal-dialog dialog">
+        <div class="modal-content content">
+            <div class="modal-header header">
+                <h1 class="modal-title fs-5" id="photoModalLabel">crop photo</h1>
+            </div>
+            <div class="modal-body body">
+                <image-cropper *ngIf="isBrowser" [output]="'base64'" [resizeToWidth]="256"
+                    [imageChangedEvent]="imageChangedEvent" [maintainAspectRatio]="true" [aspectRatio]="1 / 1"
+                    format="png" (imageCropped)="imageCropped($event)" (imageLoaded)="imageLoaded($event)"
+                    (cropperReady)="cropperReady()" (loadImageFailed)="loadImageFailed()">
+                </image-cropper>
+            </div>
+            <div class="modal-footer photo-Footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
+                <button type="button" class="btn btn-danger" (click)="saveImage()">
+                    Done
+                </button>
+            </div>
+        </div>
+    </div>
 </div>

@@ -10,6 +10,9 @@ body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
   background: linear-gradient(90deg, #fcf6f7, #f1f8fc);
 }
+* {
+  scrollbar-width: none;
+}
 @font-face {
   font-family: "Poppins-regular";
   src: url("/poppins/Poppins-Regular.ttf") format("truetype");
@@ -34,13 +37,17 @@ label {
   font-size: 12px !important;
 }
 .mat-mdc-form-field-label {
-  font-family: "Poppins", sans-serif !important;
+  font-family: "Poppins-regular", sans-serif !important;
 }
-.mat-label {
-  font-family: "Poppins", sans-serif !important;
+mat-label {
+  font-family: "Poppins-regular", sans-serif !important;
+  color: #748fad !important;
 }
 .mat-mdc-tab-body-content {
   overflow: hidden !important;
+}
+.material-symbols-outlined {
+  cursor: pointer;
 }
 .loading-div {
   position: fixed;

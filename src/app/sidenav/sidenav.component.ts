@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, inject, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import {
   Router,
   RouterLink,
@@ -21,16 +21,20 @@ declare var bootstrap: any;
   templateUrl: './sidenav.component.html',
   styleUrl: './sidenav.component.scss',
 })
-export class SidenavComponent {
+export class SidenavComponent implements OnInit {
   isButton = false;
   isDrop = false;
   isModal = false;
   isDropdownOpen: boolean = false;
   isAddNewOpen: boolean = false;
   router = inject(Router);
-  authService = inject(AuthService);
+  constructor(private auth: AuthService,) { }
   exampleModalInstance: any = null;
+  user: any
   @ViewChild(EmployeeComponent) employeeComponent!: EmployeeComponent;
+  ngOnInit() {
+    this.user = this.auth.getUser();
+  }
 
   toggleAddNew() {
     this.isAddNewOpen = !this.isAddNewOpen;

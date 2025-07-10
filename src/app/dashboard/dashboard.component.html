@@ -1,3 +1,131 @@
-<div class="container">
-    <p>dashboard works!</p>
+<div class="container-fluid">
+    <div class="section">
+        <div class="sub-header row">
+            <div class="col-12 col-md-6 col-lg-9 col-xl-9">
+                <h3>Good Morning {{ user.firstName }} {{ user.lastName }}</h3>
+                <p class="sub-title">
+                    Here is your day to day updates and other information
+                </p>
+            </div>
+            <div class="col-12 col-md-6 col-lg-3 col-xl-3 timeDiv">
+                <div class="text-content">
+                    <label>Current Time</label>
+                    <p class="dtae">
+                        {{ currentTime | date : "dd MMM yyyy" }}
+                        {{ currentTime | date : "hh : mm aa" }}
+                    </p>
+                </div>
+                <div class="icon">
+                    <img src="/ClockCountdown.png" alt="image not found" class="img-fluid" />
+                </div>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-12 col-md-12 col-lg-3 col-xl-3">
+                <div class="cards flex-column h-100 w-100">
+                    <div class="upcoming-holidays">
+                        <h3>Upcoming Holidays</h3>
+                        <div class="holidayList">
+                            <div class="holidayItem" *ngFor="let holidays of upcomingHolidays">
+                                <p class="m-0 holiday-date">
+                                    {{holidays.date}}
+                                </p>
+                                <p class="m-0 holiday-name">{{ holidays.name }}</p>
+                                <hr />
+                            </div>
+                        </div>
+                    </div>
+                    <div class="chart">
+                        <div class="present">
+                            <div class="total-counting">
+                                <div class="total-presents align-items-center">
+                                    <div class="col">
+                                        <h3 class="title mb-1">Total Presents</h3>
+                                        <h2 class="total-count mb-0">{{ totalCount }}</h2>
+                                    </div>
+
+                                    <div class="col-auto text-end">
+                                        <p class="monthyear mb-0">
+                                            {{ currentTime | date : "MMMM yyyy" }}
+                                        </p>
+                                    </div>
+                                </div>
+
+                                <div class="chart-container">
+                                    <!-- <highcharts-chart 
+                                      [Highcharts]="highcharts" 
+                                      [options]="chartOptions"
+                                      style="width: 100%; height: 400px; display: block;">
+                                    </highcharts-chart> -->
+                                    <div class="bar-chart">
+                                        <highcharts-chart [options]="chartOptions" [(update)]="updateFlag"
+                                            style="width: 100%; height: 400px; display: block;">
+                                        </highcharts-chart>
+                                    </div>
+
+                                    <div class="progress">
+                                        <div class="progress-bar bg-primary" role="progressbar" [style.width.%]="total">
+                                        </div>
+                                        <div class="progress-bar bg-danger" role="progressbar"
+                                            [style.width.%]="totalabsent"></div>
+                                    </div>
+                                </div>
+
+                                <div class="legend">
+                                    <span class="legend-item">
+                                        <span class="dot blue"></span> Present {{ total }}%
+                                    </span>
+                                    <span class="legend-items" style="color: #eb4851">
+                                        <span class="dot red"></span> Absent {{ totalabsent }}%
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-6 col-xl-6">
+                <div class="leave-container flex-column h-100 w-100">
+                    <div class="attendace-card">
+                        <label class="who">Who is In?</label>
+                        <div></div>
+                        <hr />
+                        <label class="who">Late Arrivals (0)</label>
+                        <div></div>
+                        <hr />
+                        <label class="who">Work From Home (0)</label>
+                        <div></div>
+                        <hr />
+                        <label class="who">New Joiners (0)</label>
+                        <div></div>
+                        <hr />
+                    </div>
+                </div>
+            </div>
+            <div class="col-12 col-md-12 col-lg-3 col-xl-3">
+                <div class="cards flex-column h-100 w-100">
+                    <div class="timeout">
+                        <label class="mt-2">{{currentTime|date:'dd MMM YYY'}} {{currentTime|date:"hh:mm aa"}}</label>
+                        <div class="shift-date mt-2">
+                            ⏱️ Working Time: 00:00:00
+                        </div>
+
+                    </div>
+                    <div class="today-leave">
+                        <div class="leave-card">
+                            <h3 class="title">Today - On Leave</h3>
+                            <div class="team-list"></div>
+                            <p class="month">This Month (0)</p>
+                            <div class="leave-list">
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>

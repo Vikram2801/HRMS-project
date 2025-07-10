@@ -1,12 +1,526 @@
 @use "../../variable.scss" as *;
-.container {
+.container-fluid {
   margin-left: 274px;
   width: calc(100% - 274px);
-  position: relative;
+  position: absolute;
+  bottom: 0;
+  right: 0;
   top: 100px;
 
   @include mobile() {
     margin-left: 79px;
     width: calc(100% - 79px);
+  }
+  .section {
+    padding: 20px;
+    h3 {
+      color: #000;
+      width: 100%;
+      font-family: "poppins-regular";
+      padding-top: 9px;
+      font-size: 34px;
+      font-weight: 500;
+    }
+    .sub-title {
+      font-size: 22px;
+      padding-top: 10px;
+      font-weight: 400;
+      color: #444;
+      font-family: "poppins-regular";
+      margin: 0;
+    }
+    .timeDiv {
+      position: relative;
+      border: 1px solid #e1e1e1 !important;
+      background-color: #fff;
+      padding: 20px;
+      width: 24.2%;
+      border-radius: 8px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      label {
+        color: #006af9;
+        font-size: 16px;
+      }
+      .date {
+        font-weight: 500;
+        color: #000;
+        font-family: "poppins-regular";
+        font-size: 15px;
+      }
+    }
+    .cards {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+      width: 100%;
+      .upcoming-holidays {
+        position: relative;
+        background-color: #fff;
+        border: 1px solid #e1e1e1;
+        border-radius: 8px;
+        padding: 20px;
+        height: 245px;
+        width: 100%;
+        // overflow-y: auto;
+
+        h3 {
+          font-size: 18px;
+          color: #121212;
+          font-family: "poppins-regular";
+        }
+        .holidayList {
+          max-height: 180px;
+          margin: 11px 0;
+          overflow-y: auto;
+          padding: 10px 0;
+          scroll-behavior: smooth;
+          scrollbar-width: thin;
+          .holiday-date {
+            font-size: 14px;
+            color: #000;
+            font-family: "poppins-regular";
+            line-height: 1.2;
+            font-weight: 200;
+          }
+          .holiday-name {
+            font-size: 13px;
+            color: #41475e;
+            font-family: "poppins-regular";
+            line-height: 1.2;
+            font-weight: 400;
+            padding: 3px 0;
+          }
+        }
+      }
+      .chart {
+        background-color: #ffffff;
+        border: 1px solid #e1e1e1;
+        border-radius: 8px;
+        width: 50%;
+        height: 333px;
+        margin-top: 23px;
+        padding: 20px;
+        width: 100%;
+        font-size: 30px;
+
+        @include mobile() {
+          width: 100%;
+          padding: 10px !important;
+        }
+
+        @include tablet() {
+          width: 100%;
+        }
+
+        @include ipad {
+          width: 100%;
+          padding: 10px !important;
+        }
+
+        @include ipadpro() {
+          width: 100%;
+          padding: 20px;
+        }
+
+        @include ipadpro1() {
+          width: 100%;
+          padding: 20px;
+        }
+
+        .present {
+          font-size: 20px;
+          color: #121212;
+          // font-weight: 600;
+          font-family: "poppin-regular";
+          @include mobile() {
+            font-size: 16px;
+          }
+
+          @include tablet() {
+            font-size: 16px;
+          }
+
+          @include ipad() {
+            font-size: 16px;
+          }
+
+          @include ipadpro1() {
+            font-size: 16px;
+          }
+
+          @include ipadpro() {
+            font-size: 16px;
+          }
+
+          @include laptop() {
+            font-size: 17px;
+          }
+        }
+
+        .title {
+          font-size: 18px;
+          font-weight: 400;
+          color: #111111;
+          font-family: "poppin-regular";
+          margin-top: 5px;
+
+          // margin-bottom: 10px;
+          @include mobile() {
+            font-size: 15px;
+          }
+
+          @include tablet() {
+            font-size: 16px;
+          }
+
+          @include ipad() {
+            font-size: 14px;
+          }
+
+          @include ipadpro1() {
+            font-size: 14px;
+          }
+
+          @include ipadpro() {
+            font-size: 14px;
+          }
+
+          @include laptop() {
+            font-size: 16px;
+          }
+        }
+
+        .total-presents {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          font-size: 18px;
+          font-weight: bold;
+
+          @include ipad() {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+          }
+
+          @include ipadpro() {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+          }
+
+          @include ipadpro1() {
+            display: flex;
+            flex-direction: column;
+            text-align: center;
+          }
+        }
+
+        .total-count {
+          font-size: 18px;
+          color: #1c1c1c;
+          margin: 10px 0;
+          font-weight: 550;
+          font-family: "poppin-regular";
+
+          @include ipad() {
+            font-size: 15px;
+            margin: 0;
+          }
+
+          .monthyear {
+            color: #111111;
+            font-family: "poppin-regular";
+            font-size: 18px;
+            font-weight: 400;
+          }
+
+          @include mobile() {
+            font-size: 17px;
+          }
+        }
+
+        .chart-container {
+          width: 100%;
+          height: 150px;
+        }
+
+        .bar-chart {
+          width: 100%;
+          height: 100%;
+          margin-bottom: 20px;
+          display: flex;
+          justify-content: center;
+          align-items: flex-end;
+        }
+        highcharts-chart {
+          width: 100% !important;
+          height: 100% !important;
+          margin-bottom: -22px;
+        }
+
+        .mdc-linear-progress__bar-inner {
+          border-color: #004cdf !important;
+          border-radius: 50%;
+        }
+
+        .progress {
+          border-radius: 1px;
+        }
+
+        .progress-bar {
+          transition: width 0.5s ease-in-out;
+        }
+
+        .progress-bar.bg-primary {
+          background-color: #004cdf !important;
+        }
+
+        .progress-bar.bg-danger {
+          background-color: #eb4851 !important;
+        }
+
+        .legend {
+          display: flex;
+          justify-content: space-between;
+          width: 100%;
+          margin-top: 49px;
+          font-size: 14px;
+          font-family: "poppin-regular";
+
+          @include ipadpro1() {
+            font-size: 12px;
+            margin-top: 42px;
+          }
+
+          @include laptop() {
+            font-size: 12px;
+            margin-top: 42px;
+          }
+        }
+
+        .legend-item {
+          display: flex;
+          align-items: center;
+          color: #004cdf;
+
+          @include ipad() {
+            font-size: 14px;
+          }
+          @include ipadpro1() {
+            font-size: 12px;
+          }
+        }
+
+        .legend-items {
+          display: flex;
+          align-items: center;
+          color: #eb4851;
+          font-family: "poppin-regular";
+          @include ipad() {
+            font-size: 14px;
+          }
+          @include ipadpro1() {
+            font-size: 12px;
+          }
+        }
+
+        .dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          display: inline-block;
+          margin-right: 5px;
+        }
+
+        .blue {
+          background: #004cdf;
+        }
+
+        .red {
+          background: #eb4851;
+        }
+
+        mat-icon {
+          cursor: pointer;
+        }
+
+        .rotate-icon {
+          transform: rotate(90deg);
+          /* Rotates the icon 90 degrees */
+        }
+
+        .leave-list {
+          display: flex;
+          flex-direction: column;
+          gap: 0px;
+
+          @include mobile() {
+            padding: 0;
+          }
+
+          @include ipadpro1() {
+            padding: 0;
+          }
+
+          hr {
+            border: none;
+            border-top: 1px solid #e1e1e1;
+            margin: 16px 0;
+          }
+
+          .leave-item {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            padding: 3px 0;
+
+            @include mobile() {
+              flex-direction: column;
+              text-align: center;
+            }
+
+            @include ipadpro1 {
+              flex-direction: column;
+              text-align: center;
+            }
+
+            img {
+              // width: 20px;
+              // height: 20px;
+              border-radius: 50%;
+              object-fit: cover;
+              border: 2px solid #ddd;
+              margin-right: 15px;
+            }
+
+            .leave-details {
+              flex-grow: 1; // Takes available space
+              display: flex;
+              flex-direction: column;
+              font-size: 14px;
+              color: #555;
+              gap: 2px;
+
+              .name {
+                font-size: 15px;
+                font-weight: 500;
+                color: #121212;
+
+                @include mobile() {
+                  font-size: 14px;
+                }
+                @include ipadpro1() {
+                  font-size: 13px;
+                }
+
+                @include laptop() {
+                  font-size: 13px;
+                }
+              }
+
+              .emp-id {
+                font-size: 13px;
+                color: #41475e;
+                font-style: italic;
+              }
+
+              .date {
+                font-size: 13px;
+                color: #777;
+              }
+            }
+
+            .days {
+              font-size: 13px;
+              font-weight: 400;
+              color: #5f5f5f;
+              white-space: nowrap; // Prevents text from wrapping
+              min-width: 70px;
+              text-align: right;
+              font-family: "poppin-regular";
+
+              @include mobile {
+                text-align: center;
+              }
+
+              @include ipadpro1 {
+                text-align: center;
+              }
+
+              @include laptop {
+                text-align: center;
+              }
+            }
+          }
+
+          .more {
+            color: #1294f2;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
+    .leave-container {
+      padding: 0;
+      .attendace-card {
+        background: #fff;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1.15px solid #e1e1e1;
+        height: 603px;
+        width: 100%;
+        .who {
+          color: #121212;
+          font-size: 18px;
+          padding: 2px 0;
+          font-family: "poppins-regular";
+        }
+      }
+    }
+    .timeout {
+      position: relative;
+      background-color: #fff;
+      border: 1px solid #e1e1e1;
+      border-radius: 8px;
+      padding: 20px;
+      height: 245px;
+      width: 100%;
+      .mt-2 {
+        color: #121212;
+        padding: 2px 0;
+        font-size: 18px;
+        font-family: "poppins-regular";
+      }
+    }
+    .today-leave {
+      background-color: #fff;
+      border: 1px solid #e1e1e1;
+      border-radius: 8px;
+      width: 50%;
+      height: 333px;
+      margin-top: 23px;
+      padding: 20px;
+      width: 100%;
+      font-size: 30px;
+      .title {
+        font-size: 18px;
+        color: #121212;
+        font-family: "poppins-regular";
+      }
+      .month {
+        font-size: 18px;
+        font-weight: 400;
+        color: #111;
+        font-family: "poppins-regular";
+        margin-top: 5px;
+      }
+    }
   }
 }

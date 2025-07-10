@@ -32,8 +32,8 @@
       arrow_circle_right
     </span>
     <div class="pro-detail">
-      <img src="/man.png" alt="man pic" class="img-fluid" />
-      <p>Siddhu Admin</p>
+      <img [src]="user.employeePhoto" alt="man pic" class="img-fluid" />
+      <p class="name">Siddhu Admin</p>
       <span>ADMIN</span>
     </div>
   </div>
@@ -155,7 +155,7 @@
         <ul class="dropdown-menu profile-dropdown">
           <li>
             <a class="dropdown-item" href="">
-              <img src="/man.png" alt="profileImg" class="img-fluid pro-image" />
+              <img [src]="user.employeePhoto" alt="profileImg" class="img-fluid pro-image" />
               <h3>Siddu Admin</h3>
             </a>
           </li>

@@ -1,12 +1,78 @@
 @use "../../variable.scss" as *;
-.container {
+.container-fluid {
   margin-left: 274px;
   width: calc(100% - 274px);
   position: relative;
+  padding: 27px;
   top: 100px;
 
   @include mobile() {
     margin-left: 79px;
     width: calc(100% - 79px);
+  }
+  .head {
+    padding: 15px 8px;
+  }
+  .profile-card {
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    border-radius: 12px;
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    margin-bottom: 8px;
+    margin-top: 10px;
+    gap: 30px;
+    .profile {
+      display: flex;
+      flex-direction: column;
+      padding: 25px;
+      border-radius: 32px;
+      width: 100%;
+      max-width: 401px;
+      border: none;
+      .title {
+        margin-bottom: 16px;
+        font-size: 19px;
+        color: #0e1f2c;
+        font-family: "poppins-regular";
+      }
+      .img-fluid {
+        max-width: 122px;
+        max-height: 122px;
+        border-radius: 50%;
+        border: 0.5px solid lightgray;
+      }
+      .custom-input {
+        position: relative;
+        left: 91px;
+        bottom: 11px;
+      }
+    }
+  }
+  .form {
+    font-family: "poppins-regular";
+    background-color: #fff;
+    border: 1px solid #e1e1e1;
+    padding: 30px;
+    margin: 0;
+    border-radius: 12px;
+    .example-full-width {
+      width: 100% !important;
+    }
+  }
+  .btn-primary {
+    background: #2562ea;
+    border: 1px solid #2562ea;
+    border-radius: 6px;
+    font-family: "poppins-regular";
+    padding: 8px 16px;
+    color: #fff;
+    cursor: pointer;
+    font-size: 16px;
+    width: 160px;
+  }
+  .errorMessage {
+    font-size: 12px !important;
   }
 }

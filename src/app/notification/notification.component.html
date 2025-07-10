@@ -1,3 +1,41 @@
-<div class="container">
-    <p>notification works!</p>
+<div class="loading-div" *ngIf="isLoading">
+    <mat-spinner class="custom-spinner"></mat-spinner>
+</div>
+<div class="container-fluid">
+    <div class="section">
+        <div class="sub-header row">
+            <div class="col-12">
+                <h3>Good Morning {{ user.firstName }} {{ user.lastName }} !</h3>
+                <p class="sub-title">
+                    Here is your day to day updates and other information
+                </p>
+            </div>
+            <div class="col-12">
+                <div class="cards ">
+                    <form class="w-100">
+                        <textarea placeholder="Write here" rows="4" class="w-100"></textarea>
+                    </form>
+                    <button class="btn-send "> <span class="material-symbols-outlined">arrow_upward</span></button>
+                </div>
+                <div class="notification">
+                    <div class="noficiation-item" *ngFor="let notification of notification">
+
+                        <div class="date">
+                            {{notification.createdAt|date:"MMM dd YYYY"}}
+                            <span class="material-symbols-outlined">delete</span>
+                        </div>
+                        <div class="title">{{notification.subject}}</div>
+                        <div class="content">
+                            <p> {{notification.body}}</p>
+                        </div>
+                        <hr>
+
+                    </div>
+
+
+                </div>
+            </div>
+
+        </div>
+    </div>
 </div>
